@@ -9,7 +9,7 @@ const ClientesLista = () => {
     // Función para cargar todos los estudiantes
     const cargarTodosLosEstudiantes = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/estudiantes');
+            const response = await axios.get('https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes');
             setEstudiantes(response.data);
         } catch (error) {
             console.error('Error al cargar los estudiantes:', error);

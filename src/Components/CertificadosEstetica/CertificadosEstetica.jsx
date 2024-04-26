@@ -108,7 +108,7 @@ const CertificadosEstetica = () => {
     // Esta función ahora es condicional basada en si numeroId tiene valor
     const fetchUserData = async () => {
       try {
-        let url = 'http://localhost:3000/api/estudiantes';
+        let url = 'https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes';
         if (numeroId) {
           url += `/numeroId/${numeroId}`;
         }
@@ -129,7 +129,7 @@ const CertificadosEstetica = () => {
 
   const enviarCursoAUsuario = async () => {
     try {
-      const response = await axios.post(`http://localhost:3000/api/estudiantes/${numeroId}/addCurso`, {
+      const response = await axios.post(`https://sabersalud-backend-e0a3010fab41.herokuapp.com/${numeroId}/addCurso`, {
         nombreCurso: selectedOption.nombre,
         vencimiento: selectedDate,
         valor: courseValue, // Agrega el valor del curso al cuerpo de la solicitud

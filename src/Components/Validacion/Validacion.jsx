@@ -8,7 +8,7 @@ function Validacion() {
 
   const consultarEstudiante = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/estudiantes/numeroId/${numeroId}`);
+      const response = await axios.get(`https://sabersalud-backend-e0a3010fab41.herokuapp.com/numeroId/${numeroId}`);
       console.log("Respuesta de la API:", response.data);
       setEstudiante(response.data);  // Asumiendo que la API devuelve directamente el estudiante.
       setError('');

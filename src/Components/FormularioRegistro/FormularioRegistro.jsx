@@ -30,7 +30,7 @@ const FormularioRegistro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/estudiantes', formData);
+      const response = await axios.post('https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes', formData);
       console.log(response.data);
       // Aquí podrías redirigir al usuario o mostrar un mensaje de éxito
     } catch (error) {
