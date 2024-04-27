@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './FormularioRegistro.css';
 import banner from "../../../public/banner-registro.jpg"
+import Swal from 'sweetalert2';
 
 const FormularioRegistro = () => {
   const [formData, setFormData] = useState({
@@ -12,11 +13,12 @@ const FormularioRegistro = () => {
     gradoEscolaridad: '',
     profesion: '',
     celular: '',
+    celularAdicional: '', // Campo adicional para número de contacto
+    comoTeGustariaQueTeLlamen: '', // Campo para cómo le gusta que le llamen
     ciudadResidencia: '',
     tipoIdentificacion: '',
     numeroId: '',
-    cursos: [],
-    fechaNacimiento: ''
+    cursos: []
   });
 
   const handleChange = (e) => {
@@ -30,12 +32,25 @@ const FormularioRegistro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes', formData);
-      console.log(response.data);
-      // Aquí podrías redirigir al usuario o mostrar un mensaje de éxito
+      const response = await axios.post('http://localhost:3000/api/estudiantes', formData);
+      // Si la respuesta es exitosa, muestra el SweetAlert con check verde
+      Swal.fire({
+        icon: 'success',
+        title: '¡Tu registro ha sido exitoso!',
+        text: 'Informa al asesor para continuar el proceso 📲',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+      });
     } catch (error) {
       console.error(error);
-      // Manejar el error (mostrar mensaje al usuario, etc.)
+      // Si ocurre un error, muestra un SweetAlert indicando que no es posible registrar
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No es posible registrarte en este momento',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Cerrar'
+      });
     }
   };
 
@@ -93,6 +108,33 @@ const FormularioRegistro = () => {
           onChange={handleChange}
         />
       </div>
+
+      <div>
+            <label htmlFor="celularAdicional" className="block text-sm font-medium text-gray-700">Número de contacto adicional</label>
+            <input
+              type="text"
+              name="celularAdicional"
+              id="celularAdicional"
+              placeholder='Otro número de celular'
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-#0049CC focus:border-#0049CC sm:text-sm"
+              value={formData.celularAdicional}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* Nuevo campo para cómo le gusta que le llamen */}
+          <div>
+            <label htmlFor="comoTeGustariaQueTeLlamen" className="block text-sm font-medium text-gray-700">¿Cómo te gusta que te llamen?</label>
+            <input
+              type="text"
+              name="comoTeGustariaQueTeLlamen"
+              id="comoTeGustariaQueTeLlamen"
+              placeholder='Nombre preferido'
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-#0049CC focus:border-#0049CC sm:text-sm"
+              value={formData.comoTeGustariaQueTeLlamen}
+              onChange={handleChange}
+            />
+          </div>
 
       {/* Edad */}
       <div>
@@ -191,6 +233,7 @@ const FormularioRegistro = () => {
           <option value="C.C.">C.C.</option>
           <option value="C.E.">C.E.</option>
           <option value="P.A.">P.A.</option>
+          <option value="P.P.T.">P.P.T.</option>
         </select>
       </div>
 
@@ -207,21 +250,6 @@ const FormularioRegistro = () => {
     onChange={handleChange}
   />
 </div>
-
-
-      {/* Fecha de Nacimiento */}
-      <div>
-        <label htmlFor="fechaNacimiento" className="block text-sm font-medium text-gray-700">Fecha de Nacimiento</label>
-        <input
-          type="date"
-          name="fechaNacimiento"
-          id="fechaNacimiento"
-          required
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-#0049CC focus:border-#0049CC sm:text-sm"
-          value={formData.fechaNacimiento}
-          onChange={handleChange}
-        />
-      </div>
 
       <div className="flex justify-center ">
         <button type="submit" className="mt-5 w-1/2 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#007DFE] hover:bg-[#003DA5] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#005BEE] registro-button">

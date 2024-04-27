@@ -12,7 +12,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const response = await axios.post('http://localhost:3000/api/auth/login', {
+        const response = await axios.post('https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/auth/login', {
           email,
           password
         });

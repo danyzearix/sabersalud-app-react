@@ -129,7 +129,7 @@ const CertificadosEstetica = () => {
 
   const enviarCursoAUsuario = async () => {
     try {
-      const response = await axios.post(`https://sabersalud-backend-e0a3010fab41.herokuapp.com/${numeroId}/addCurso`, {
+      const response = await axios.post(`https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes/${numeroId}/addCurso`, {
         nombreCurso: selectedOption.nombre,
         vencimiento: selectedDate,
         valor: courseValue, // Agrega el valor del curso al cuerpo de la solicitud

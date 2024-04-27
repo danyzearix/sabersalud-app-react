@@ -19,7 +19,7 @@ const ClientesLista = () => {
     // Función para filtrar estudiantes en tiempo real
     const filtrarEstudiantes = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/estudiantes?numeroId=${filtroNumeroId}&nombre=${filtroNombre}`);
+            const response = await axios.get(`https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes?numeroId=${filtroNumeroId}&nombre=${filtroNombre}`);
             setEstudiantes(response.data);
         } catch (error) {
             console.error('Error al filtrar los estudiantes:', error);

@@ -26,15 +26,18 @@ const Sidebar = () => {
 
       {/* Nav Items */}
       <nav>
-        <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
+        <a href="https://app.sabersalud.co/" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
           Inicio 🏠</a>
-        <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
+        <a href="https://app.sabersalud.co/certificados" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
           Certificados SaberSalud 🩺
         </a>
-        <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
+        <a href="https://app.sabersalud.co/certificados-estetica" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
           Certificados Estetica 💅
         </a>
-        <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
+        <a href="https://app.sabersalud.co/formulario-registro" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
+          Crear cliente 💾
+        </a>
+        <a href="https://app.sabersalud.co/clientes" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
           Lista de clientes 👩‍⚕️</a>
         {/* Botón de cerrar sesión */}
         <button onClick={handleLogout} className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
