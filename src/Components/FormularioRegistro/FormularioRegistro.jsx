@@ -191,7 +191,7 @@ const FormularioRegistro = () => {
 
       {/* Celular */}
       <div>
-        <label htmlFor="celular" className="block text-sm font-medium text-gray-700">Celular</label>
+        <label htmlFor="celular" className="block text-sm font-medium text-gray-700">Célular</label>
         <input
           type="text"
           name="celular"
