@@ -98,7 +98,9 @@ const CertificadosEstetica = () => {
   const [invoiceDate, setInvoiceDate] = useState(""); // Estado para manejar la fecha de la factura
 
   const [cursosDisponibles, setCursosDisponibles] = useState([
-    { nombre: "SUEROTERAPIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` }
+    { nombre: "SUEROTERAPIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
+    { nombre: "SUEROTERAPIA AVANZADA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
+    { nombre: "SUEROTERAPIA INHALATORIA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` }
   ]);
 
   const [isDataReady, setIsDataReady] = useState(false);

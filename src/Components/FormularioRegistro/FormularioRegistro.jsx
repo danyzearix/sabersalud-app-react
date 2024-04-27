@@ -32,7 +32,7 @@ const FormularioRegistro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/estudiantes', formData);
+      const response = await axios.post('https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes', formData);
       // Si la respuesta es exitosa, muestra el SweetAlert con check verde
       Swal.fire({
         icon: 'success',
@@ -47,7 +47,7 @@ const FormularioRegistro = () => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'No es posible registrarte en este momento',
+        text: `No es posible registrarte en este momento: ${error.response.data.message}`,
         confirmButtonColor: '#d33',
         confirmButtonText: 'Cerrar'
       });
@@ -60,7 +60,7 @@ const FormularioRegistro = () => {
     <img src={banner} alt="Encabezado Politécnico SaberSalud" className="w-full object-cover" style={{ height: '420px' }} />
   </div>
   <div className="bg-white p-6 rounded-b-md shadow-lg">
-  <div class="text-center text-lg p-4 font-bold text-[#033047]">
+  <div className="text-center text-lg p-4 font-bold text-[#033047]">
   <p>A partir de este momento ingresa en calidad de estudiante de SaberSalud Centro de Capacitaciones.</p>
   <p>Diligencie el formulario en su totalidad, antes de enviar verifique que la información sea correcta y lea atentamente nuestra política de TRATAMIENTO DE DATOS PERSONALES 🔐</p>
 </div>
