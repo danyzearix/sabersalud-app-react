@@ -13,13 +13,15 @@ const FormularioRegistro = () => {
     gradoEscolaridad: '',
     profesion: '',
     celular: '',
-    celularAdicional: '', // Campo adicional para número de contacto
-    comoTeGustariaQueTeLlamen: '', // Campo para cómo le gusta que le llamen
+    celularAdicional: '', 
+    comoTeGustariaQueTeLlamen: '', 
     ciudadResidencia: '',
     tipoIdentificacion: '',
     numeroId: '',
     cursos: []
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,9 +33,28 @@ const FormularioRegistro = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Mostrar SweetAlert para confirmación antes de enviar
+    Swal.fire({
+      title: 'Verifica tus datos',
+      text: 'Por favor, verifica que todos tus datos sean correctos antes de enviar el formulario.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Enviar datos',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setLoading(true); // Activa el indicador de carga
+        sendFormData(); // Llama a sendFormData solo si se confirma la acción
+      }
+    });
+  };
+  
+  const sendFormData = async () => {
     try {
       const response = await axios.post('https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes', formData);
-      // Si la respuesta es exitosa, muestra el SweetAlert con check verde
       Swal.fire({
         icon: 'success',
         title: '¡Tu registro ha sido exitoso!',
@@ -41,9 +62,24 @@ const FormularioRegistro = () => {
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'OK'
       });
+      // Restablecer formData a su estado inicial
+      setFormData({
+        nombres: '',
+        apellidos: '',
+        email: '',
+        edad: '',
+        gradoEscolaridad: '',
+        profesion: '',
+        celular: '',
+        celularAdicional: '',
+        comoTeGustariaQueTeLlamen: '',
+        ciudadResidencia: '',
+        tipoIdentificacion: '',
+        numeroId: '',
+        cursos: []
+      });
     } catch (error) {
       console.error(error);
-      // Si ocurre un error, muestra un SweetAlert indicando que no es posible registrar
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -51,22 +87,33 @@ const FormularioRegistro = () => {
         confirmButtonColor: '#d33',
         confirmButtonText: 'Cerrar'
       });
+    } finally {
+      setLoading(false); // Desactiva el indicador de carga
     }
   };
+  
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
-  <div className="rounded-t-md overflow-hidden">
-    <img src={banner} alt="Encabezado Politécnico SaberSalud" className="w-full object-cover" style={{ height: '420px' }} />
-  </div>
-  <div className="bg-white p-6 rounded-b-md shadow-lg">
-  <div className="text-center text-lg p-4 font-bold text-[#033047]">
-  <p>A partir de este momento ingresa en calidad de estudiante de SaberSalud Centro de Capacitaciones.</p>
-  <p>Diligencie el formulario en su totalidad, antes de enviar verifique que la información sea correcta y lea atentamente nuestra política de TRATAMIENTO DE DATOS PERSONALES 🔐</p>
-</div>
+      {loading ? (
+        <div className="text-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Cargando...</span>
+          </div>
+        </div>
+      ) : (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
+          <div className="rounded-t-md overflow-hidden">
+            <img src={banner} alt="Encabezado Politécnico SaberSalud" className="w-full object-cover object-center h-auto sm:h-420px" />
+          </div>
+          <div className="bg-white p-6 rounded-b-md shadow-lg">
+            <div className="text-center text-lg p-4 font-bold text-[#033047]">
+              <p>A partir de este momento ingresa en calidad de estudiante de SaberSalud Centro de Capacitaciones.</p>
+              <p>Diligencie el formulario en su totalidad, antes de enviar verifique que la información sea correcta y lea atentamente nuestra política de TRATAMIENTO DE DATOS PERSONALES 🔐</p>
+            </div>
 
-    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow-lg max-w-4xl mx-auto my-8 form-registro">
-      <div>
+            <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow-lg max-w-4xl mx-auto my-8 form-registro">
+            <div>
         <label htmlFor="nombres" className="block text-sm font-medium text-gray-700">Nombres</label>
         <input
           type="text"
@@ -109,6 +156,21 @@ const FormularioRegistro = () => {
         />
       </div>
 
+      {/* Celular */}
+      <div>
+        <label htmlFor="celular" className="block text-sm font-medium text-gray-700">Célular</label>
+        <input
+          type="text"
+          name="celular"
+          id="celular"
+          placeholder='Numero celular con WhatsApp'
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-#0049CC focus:border-#0049CC sm:text-sm"
+          value={formData.celular}
+          onChange={handleChange}
+        />
+      </div>
+
+      {/* Celular Adicional*/}
       <div>
             <label htmlFor="celularAdicional" className="block text-sm font-medium text-gray-700">Número de contacto adicional</label>
             <input
@@ -189,20 +251,6 @@ const FormularioRegistro = () => {
         />
       </div>
 
-      {/* Celular */}
-      <div>
-        <label htmlFor="celular" className="block text-sm font-medium text-gray-700">Célular</label>
-        <input
-          type="text"
-          name="celular"
-          id="celular"
-          placeholder='Numero celular con WhatsApp'
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-#0049CC focus:border-#0049CC sm:text-sm"
-          value={formData.celular}
-          onChange={handleChange}
-        />
-      </div>
-
       {/* Ciudad de Residencia */}
       <div>
         <label htmlFor="ciudadResidencia" className="block text-sm font-medium text-gray-700">Ciudad de Residencia</label>
@@ -256,19 +304,21 @@ const FormularioRegistro = () => {
         Registrar
         </button>
       </div>
+            </form>
 
-    </form>
-    <h2 className="text-md mt-18 mb-5 font-bold text-[#033047] text-center">LINEAMIENTOS</h2>
-    <ul className="list-inside text-center">
-      <li>No hacemos devolución de dinero.</li>
-      <li>No canjeamos cursos por otros cursos, servicios y/o productos.</li>
-      <li>Se compromete a cumplir con el agendamiento asignado por la institución.</li>
-      <li>Se compromete a usar lenguaje verbal respetuoso correcto.</li>
-      <li>Si por razón de fuerza mayor se ve la necesidad del cambio de fecha de sus clases, tendrá un cobro adicional para re-agendamiento.</li>
-      <li>La academia se reserva el derecho de modificar agenda de clases según aforo y eventualidades ajenas.</li>
-    </ul>
+            <h2 className="text-md mt-18 mb-5 font-bold text-[#033047] text-center">LINEAMIENTOS</h2>
+            <ul className="list-inside text-center">
+              <li>No hacemos devolución de dinero.</li>
+              <li>No canjeamos cursos por otros cursos, servicios y/o productos.</li>
+              <li>Se compromete a cumplir con el agendamiento asignado por la institución.</li>
+              <li>Se compromete a usar lenguaje verbal respetuoso correcto.</li>
+              <li>Si por razón de fuerza mayor se ve la necesidad del cambio de fecha de sus clases, tendrá un cobro adicional para re-agendamiento.</li>
+              <li>La academia se reserva el derecho de modificar agenda de clases según aforo y eventualidades ajenas.</li>
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
-</div>
   );
 };
 
