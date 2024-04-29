@@ -88,7 +88,7 @@ const FormularioRegistro = () => {
         confirmButtonText: 'Cerrar'
       });
     } finally {
-      setLoading(false); // Desactiva el indicador de carg
+      setLoading(false); // Desactiva el indicador de carga
     }
   };
   
