@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import './CertificadosEstetica.css';
 
 // Importa tu imagen de fondo
-import backgroundImage from '../../../public/certificadodos.jpg';
+import backgroundImage from '../../../public/certificadosestetica.png';
 
 // Estilos para el documento PDF
 
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 8,
     color: "#8C8C8C",
-    marginTop: 20,
+    marginTop: 18,
   } 
   
 });
