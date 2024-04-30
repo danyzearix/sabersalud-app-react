@@ -67,6 +67,20 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginHorizontal: 30,
   },
+  textofecha: {
+    textAlign: 'center',
+    fontFamily: "Montserrat",
+    fontSize: 10,
+    marginTop: 15,
+    marginHorizontal: 30,
+  },
+  textovalido: {
+    textAlign: 'center',
+    fontFamily: "Montserrat",
+    fontSize: 12,
+    marginTop: 15,
+    fontWeight: "bold"
+  },
   textocurso: {
     textAlign: 'center',
     fontSize: 20,
@@ -387,7 +401,8 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
   {/* Link para descargar el PDF */}
   <PDFDownloadLink 
     document={<CertificadosPDF userData={userData} selectedOption={selectedOption} selectedDate={selectedDate}/>} 
-    fileName={`${userData && userData[0] ? `${userData[0].nombres}  ${userData[0].apellidos}` : 'Usuario'}-${selectedOption || 'Curso'} ${estampilla} - Certificado.pdf`}
+    fileName={`${userData && userData[0] ? `${userData[0].nombres} ${userData[0].apellidos} ${userData[0].numeroId}` : 'Usuario'}-${selectedOption ? selectedOption.nombre : 'Curso'} - Certificado.pdf`}
+
     className="btn-descargar-pdf mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
     {({ blob, url, loading, error }) => (loading ? 'Generando PDF...' : 'Paso 2: Descargar Certificado')}
   </PDFDownloadLink>
@@ -419,11 +434,11 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate}) => {
           {selectedOption.textoLegal}
         </Text>}
         {selectedDate && selectedOption && (
-          <Text style={styles.textodos}>
+          <Text style={styles.textofecha}>
             DADO A LOS {selectedDate.split('-')[2]} DÍAS DEL MES DE {getMonthName(selectedDate.split('-')[1]).toUpperCase()} DEL AÑO {selectedDate.split('-')[0]}, CON UNA DURACIÓN DE {selectedOption.duracion} HORAS EN BOGOTÁ D.C.
           </Text>
         )}
-        <Text style={styles.textouno}>VÁLIDO POR 2 AÑOS</Text>
+        <Text style={styles.textovalido}>VÁLIDO POR 2 AÑOS</Text>
         <Text style={styles.timestamp}>SS{timestamp}IT</Text>
       </View>
       ))}
