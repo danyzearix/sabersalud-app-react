@@ -398,7 +398,7 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
     Paso 1: Guardar datos del certificado
   </button>
 
-  {/* Link para descargar el PDF */}
+  {/* Link para descargar el PDF s*/}
   <PDFDownloadLink 
     document={<CertificadosPDF userData={userData} selectedOption={selectedOption} selectedDate={selectedDate}/>} 
     fileName={`${userData && userData[0] ? `${userData[0].nombres} ${userData[0].apellidos} ${userData[0].numeroId}` : 'Usuario'}-${selectedOption ? selectedOption.nombre : 'Curso'} - Certificado.pdf`}
