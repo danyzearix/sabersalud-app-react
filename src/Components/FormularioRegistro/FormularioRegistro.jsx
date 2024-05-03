@@ -16,6 +16,7 @@ const FormularioRegistro = () => {
     celularAdicional: '', 
     comoTeGustariaQueTeLlamen: '', 
     ciudadResidencia: '',
+    direccion: '',
     tipoIdentificacion: '',
     numeroId: '',
     cursos: []
@@ -74,6 +75,7 @@ const FormularioRegistro = () => {
         celularAdicional: '',
         comoTeGustariaQueTeLlamen: '',
         ciudadResidencia: '',
+        direccion: '',
         tipoIdentificacion: '',
         numeroId: '',
         cursos: []
@@ -264,6 +266,21 @@ const FormularioRegistro = () => {
           onChange={handleChange}
         />
       </div>
+
+      {/* Direccion */}
+      <div>
+        <label htmlFor="direccion" className="block text-sm font-medium text-gray-700">Dirección</label>
+        <input
+          type="text"
+          name="direccion"
+          id="direccion"
+          required
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-#0049CC focus:border-#0049CC sm:text-sm"
+          value={formData.direccion}
+          onChange={handleChange}
+        />
+      </div>
+
 
       {/* Tipo de Documento de Identidad */}
       <div>
