@@ -295,10 +295,10 @@ const FormularioRegistro = () => {
         >
           <option value="">Seleccione una opción</option>
           <option value="T.I">T.I</option>
-          <option value="C.C.">C.C.</option>
-          <option value="C.E.">C.E.</option>
-          <option value="P.A.">P.A.</option>
-          <option value="P.P.T.">P.P.T.</option>
+          <option value="C.C">C.C.</option>
+          <option value="C.E">C.E.</option>
+          <option value="P.A">P.A.</option>
+          <option value="P.P.T">P.P.T</option>
         </select>
       </div>
 

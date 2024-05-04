@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { debounce } from 'lodash';
 import { Document, Page, Text, View, StyleSheet, Image, PDFDownloadLink, Font } from '@react-pdf/renderer';
 import Swal from 'sweetalert2';
 import './Certificados.css';
@@ -339,9 +340,11 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
     console.log("Fecha seleccionada:", event.target.value);
   };
 
-  const handleCourseValueChange = (event) => {
-    setCourseValue(event.target.value);
-  };
+  // Debounce handler
+  const handleCourseValueChange = debounce((value) => {
+    setCourseValue(value);
+  }, 300); // Ajusta el tiempo de espera según la necesidad
+
   
   const handleInvoiceDateChange = (event) => {
     setInvoiceDate(event.target.value);
@@ -375,13 +378,12 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
   </select>
 
   <input
-  type="number"
-  value={courseValue}
-  onChange={handleCourseValueChange} 
-  className='input w-3/4 p-2 border border-gray-300 rounded-md mt-4'
-  placeholder='Ingresa el valor del curso'
-/>
-
+      type="number"
+      onChange={(event) => handleCourseValueChange(event.target.value)}
+      className='input'
+      placeholder='Ingresa el valor del curso'
+    />
+    
  {/* Selector de fecha */}
  <label className='w-3/4 text-center'>
  Selecciona la fecha del Certificado

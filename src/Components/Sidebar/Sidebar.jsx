@@ -34,7 +34,7 @@ const Sidebar = () => {
         <a href="https://app.sabersalud.co/certificados-estetica" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
           Certificados Estetica 💅
         </a>
-        <a href="https://app.sabersalud.co/formulario-registro" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
+        <a href="https://app.sabersalud.co/formulario-registro" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold" target="_blank">
           Crear cliente 💾
         </a>
         <a href="https://app.sabersalud.co/clientes" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
