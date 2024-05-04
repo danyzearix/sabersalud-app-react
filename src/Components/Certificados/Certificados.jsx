@@ -380,19 +380,19 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
   <input
       type="number"
       onChange={(event) => handleCourseValueChange(event.target.value)}
-      className='input'
+      className='input input w-3/4 p-2 border border-gray-300 rounded-md'
       placeholder='Ingresa el valor del curso'
     />
     
  {/* Selector de fecha */}
  <label className='w-3/4 text-center'>
- Selecciona la fecha del Certificado
+ Selecciona la fecha del <strong>Certificado:</strong>
   <input type="date" onChange={handleDateChange} className='date-input w-full p-2 border border-gray-300 rounded-md mt-4' />
   </label>
 
 {/* Input para ingresar la fecha de la factura */}
 <label className='w-3/4 text-center'>
-  Selecciona la fecha de la Factura:
+  Selecciona la fecha de la <strong>Factura:</strong>
   <input
     type="date"
     value={invoiceDate}
@@ -403,7 +403,7 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
 
   {/* Botón para preparar los datos del curso */}
   <button onClick={enviarCursoAUsuario} className="btn-descargar mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Paso 1: Guardar datos del certificado
+    Paso 1: Guardar datos del certificado 💾
   </button>
 
   {/* Link para descargar el PDF s*/}
@@ -412,7 +412,7 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
     fileName={`${userData && userData[0] ? `${userData[0].nombres} ${userData[0].apellidos} ${userData[0].numeroId}` : 'Usuario'}-${selectedOption ? selectedOption.nombre : 'Curso'} - Certificado.pdf`}
 
     className="btn-descargar-pdf mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-    {({ blob, url, loading, error }) => (loading ? 'Generando PDF...' : 'Paso 2: Descargar Certificado')}
+    {({ blob, url, loading, error }) => (loading ? 'Generando PDF...' : 'Paso 2: Descargar Certificado 📑')}
   </PDFDownloadLink>
 </div>
 
