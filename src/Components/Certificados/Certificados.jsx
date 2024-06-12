@@ -434,7 +434,7 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate}) => {
         <View key={user.id}>
         <Text style={styles.name}>{user.nombres} {user.apellidos}</Text>
         <Text style={styles.identification}>{user.tipoIdentificacion} {user.numeroId}</Text>
-        <Text style={styles.textouno}>ASISTIÓ Y APROBÓ EL CURSO DE:</Text>
+        <Text style={styles.textouno}>ASISTIÓ Y APROBÓ AL CURSO DE:</Text>
         {/* Asegurar que selectedOption no es null antes de intentar renderizar su contenido */}
         {selectedOption && <Text style={styles.textocurso}>{selectedOption.nombre}</Text>}
         {/* Agregar texto legal del curso si selectedOption no es null */}

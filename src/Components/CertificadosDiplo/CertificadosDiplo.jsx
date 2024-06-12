@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { debounce } from 'lodash';
 import { Document, Page, Text, View, StyleSheet, Image, PDFDownloadLink, Font } from '@react-pdf/renderer';
 import Swal from 'sweetalert2';
-import './CertificadosEstetica.css';
+import './CertificadosDiplo.css';
+import "../../Fonts/fonts.css"
+
 
 // Importa tu imagen de fondo
-import backgroundImage from '../../../public/certificadosestetica.png';
+import backgroundImage from '../../../public/certificado.png';
 
 // Estilos para el documento PDF
 
-/// Registra la fuente Dancing Script desde Google Fonts
+// Registra la fuente
 Font.register({
-    family: 'Dancing Script',
-    src: 'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap'
-  });
-  
-  // Registrar Montserrat desde Google Fonts
-  Font.register({
-    family: 'Montserrat',
-    src: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'
-  });
+  family: 'Dancing Script',
+  src: 'https://sabersalud.co/DancingScript-Regular.ttf'
+});
+
+// Registrar Montserrat-Regular
+Font.register({
+  family: 'Montserrat',
+  fonts: [
+    { src: 'https://sabersalud.co/Montserrat-Regular.ttf' }, // Ruta relativa al archivo Montserrat Regular
+    { src: 'https://sabersalud.co/Montserrat-Bold.ttf', fontWeight: 'bold' } // Ruta relativa al archivo Montserrat Bold
+  ]
+});
 
 const styles = StyleSheet.create({
   page: {
@@ -41,7 +47,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     marginBottom: 10,
-    paddingTop: 208, // Agrega un espacio entre los elementos de nombre y identificación
+    paddingTop: 175, // Agrega un espacio entre los elementos de nombre y identificación
   },
   identification: {
     textAlign: 'center',
@@ -59,15 +65,31 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: "Montserrat",
     fontSize: 10,
+    marginTop: 25,
+    marginHorizontal: 30,
+  },
+  textofecha: {
+    textAlign: 'center',
+    fontFamily: "Montserrat",
+    fontSize: 10,
     marginTop: 15,
     marginHorizontal: 30,
   },
+  textovalido: {
+    textAlign: 'center',
+    fontFamily: "Montserrat",
+    fontSize: 12,
+    marginTop: 15,
+    fontWeight: "bold"
+  },
   textocurso: {
     textAlign: 'center',
-    fontSize: 28,
+    fontSize: 20,
     fontFamily: "Montserrat",
     fontWeight: 'bold',
     marginTop: 15,
+    marginRight: 10,
+    marginLeft: 10,
   },
   dropdown: {
     textAlign: 'center',
@@ -84,12 +106,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 8,
     color: "#8C8C8C",
-    marginTop: 18,
+    marginTop: 6,
   } 
   
 });
 
-const CertificadosEstetica = () => {
+const CertificadosDiplo = () => {
   const [userData, setUserData] = useState(null);
   const [selectedOption, setSelectedOption] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
@@ -98,9 +120,16 @@ const CertificadosEstetica = () => {
   const [invoiceDate, setInvoiceDate] = useState(""); // Estado para manejar la fecha de la factura
 
   const [cursosDisponibles, setCursosDisponibles] = useState([
-    { nombre: "SUEROTERAPIA INHALATORIA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
-    { nombre: "MESOTERAPIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101263.` },
-    { nombre: "HIDROLIPOCLASIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
+{ nombre: "ATENCIÓN INTEGRAL DE PACIENTE CRÍTICO NEONATAL UCIN", duracion: "120", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL,
+EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101268.` },
+{ nombre: "ATENCIÓN INTEGRAL DEL PACIENTE CRÍTICO PEDIATRICO UCIP ", duracion: "120", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL,
+EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 del 2015  MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101268.` },
+{ nombre: "ATENCIÓN INTEGRAL DE PACIENTE CRÍTICO UCI", duracion: "120", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL,
+EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101268.` },
+{ nombre: "CIRCULANTE DE SALAS DE CIRUGÍA ", duracion: "120", textoLegal: `SEGÚN RESOLICIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACION INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL 
+Y LA NORMA DE COMPETENCIA LABORAL No 230101290` },
+{ nombre: "CUIDADO INTEGRAL AL PACIENTE RENAL ", duracion: "80", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL,
+EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101269` },
   ]);
 
   const [isDataReady, setIsDataReady] = useState(false);
@@ -183,9 +212,11 @@ const CertificadosEstetica = () => {
     console.log("Fecha seleccionada:", event.target.value);
   };
 
-  const handleCourseValueChange = (event) => {
-    setCourseValue(event.target.value);
-  };
+  // Debounce handler
+  const handleCourseValueChange = debounce((value) => {
+    setCourseValue(value);
+  }, 300); // Ajusta el tiempo de espera según la necesidad
+
   
   const handleInvoiceDateChange = (event) => {
     setInvoiceDate(event.target.value);
@@ -195,14 +226,12 @@ const CertificadosEstetica = () => {
 
 
   return (
-    <div className='container flex flex-col items-center justify-center min-h-screen bg-soft-pink'>
-    
-    <img
-    src="https://saberestetica.com/wp-content/uploads/2023/06/Saber-Estetica-Logo-Nuevo-02.png"
-    alt="Descripción de la imagen"
-    className="w-1/4 my-4" // Ajusta el tamaño y el margen según sea necesario
-    />
-  
+    <div className='container flex flex-col items-center justify-center min-h-screen'>
+      <img
+      src="https://sabersalud.co/wp-content/uploads/2020/10/Logo-Color-Original-Horizontal-con-Eslogan-Tiny.png"
+      alt="Descripción de la imagen"
+      className="w-1/4 my-4" // Ajusta el tamaño y el margen según sea necesario
+      />
   {/* Input para ingresar numeroId */}
   <input
     type="text"
@@ -214,29 +243,28 @@ const CertificadosEstetica = () => {
 
   {/* Lista desplegable para seleccionar el curso */}
   <select onChange={handleSelectChange} className='dropdown w-3/4 p-2 border border-gray-300 rounded-md mt-4'>
-    <option value="">Seleccione un curso</option>
+    <option value="">Seleccione un diplomado</option>
     {cursosDisponibles.map((curso, index) => (
       <option key={index} value={curso.nombre}>{curso.nombre}</option>
     ))}
   </select>
 
   <input
-  type="number"
-  value={courseValue}
-  onChange={handleCourseValueChange} 
-  className='input w-3/4 p-2 border border-gray-300 rounded-md mt-4'
-  placeholder='Ingresa el valor del curso'
-/>
-
+      type="number"
+      onChange={(event) => handleCourseValueChange(event.target.value)}
+      className='input input w-3/4 p-2 border border-gray-300 rounded-md'
+      placeholder='Ingresa el valor del curso'
+    />
+    
  {/* Selector de fecha */}
  <label className='w-3/4 text-center'>
- Selecciona la fecha del Certificado
+ Selecciona la fecha del <strong>Certificado:</strong>
   <input type="date" onChange={handleDateChange} className='date-input w-full p-2 border border-gray-300 rounded-md mt-4' />
   </label>
 
 {/* Input para ingresar la fecha de la factura */}
 <label className='w-3/4 text-center'>
-  Selecciona la fecha de la Factura:
+  Selecciona la fecha de la <strong>Factura:</strong>
   <input
     type="date"
     value={invoiceDate}
@@ -247,17 +275,19 @@ const CertificadosEstetica = () => {
 
   {/* Botón para preparar los datos del curso */}
   <button onClick={enviarCursoAUsuario} className="btn-descargar mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Paso 1: Guardar datos del certificado
+    Paso 1: Guardar datos del certificado 💾
   </button>
 
-  {/* Link para descargar el PDF */}
+  {/* Link para descargar el PDF s*/}
   <PDFDownloadLink 
     document={<CertificadosPDF userData={userData} selectedOption={selectedOption} selectedDate={selectedDate}/>} 
-    fileName={`${userData && userData[0] ? `${userData[0].nombres}  ${userData[0].apellidos}` : 'Usuario'}-${selectedOption || 'Curso'} ${estampilla} - Certificado.pdf`}
+    fileName={`${userData && userData[0] ? `${userData[0].nombres} ${userData[0].apellidos} ${userData[0].numeroId}` : 'Usuario'}-${selectedOption ? selectedOption.nombre : 'Curso'} - Certificado.pdf`}
+
     className="btn-descargar-pdf mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-    {({ blob, url, loading, error }) => (loading ? 'Generando PDF...' : 'Paso 2: Descargar Certificado')}
+    {({ blob, url, loading, error }) => (loading ? 'Generando PDF...' : 'Paso 2: Descargar Certificado 📑')}
   </PDFDownloadLink>
 </div>
+
 
   );
 };
@@ -276,7 +306,7 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate}) => {
         <View key={user.id}>
         <Text style={styles.name}>{user.nombres} {user.apellidos}</Text>
         <Text style={styles.identification}>{user.tipoIdentificacion} {user.numeroId}</Text>
-        <Text style={styles.textouno}>ASISTIÓ Y APROBÓ AL CURSO DE:</Text>
+        <Text style={styles.textouno}>ASISTIÓ Y APROBÓ AL DIPLOMADO EN:</Text>
         {/* Asegurar que selectedOption no es null antes de intentar renderizar su contenido */}
         {selectedOption && <Text style={styles.textocurso}>{selectedOption.nombre}</Text>}
         {/* Agregar texto legal del curso si selectedOption no es null */}
@@ -284,11 +314,12 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate}) => {
           {selectedOption.textoLegal}
         </Text>}
         {selectedDate && selectedOption && (
-          <Text style={styles.textodos}>
+          <Text style={styles.textofecha}>
             DADO A LOS {selectedDate.split('-')[2]} DÍAS DEL MES DE {getMonthName(selectedDate.split('-')[1]).toUpperCase()} DEL AÑO {selectedDate.split('-')[0]}, CON UNA DURACIÓN DE {selectedOption.duracion} HORAS EN BOGOTÁ D.C.
           </Text>
         )}
-        <Text style={styles.timestamp}>SE{timestamp}IT</Text>
+        <Text style={styles.textovalido}>VÁLIDO POR 2 AÑOS</Text>
+        <Text style={styles.timestamp}>SS{timestamp}IT</Text>
       </View>
       ))}
     </View>
@@ -304,4 +335,8 @@ const getMonthName = (monthNumber) => {
   return monthNames[parseInt(monthNumber, 10) - 1];
 };
 
-export default CertificadosEstetica;
+export default CertificadosDiplo 
+
+
+
+

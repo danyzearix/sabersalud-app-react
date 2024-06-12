@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Document, Page, Text, View, StyleSheet, Image, PDFDownloadLink, Font } from '@react-pdf/renderer';
 import Swal from 'sweetalert2';
-import './CertificadosEstetica.css';
+import './CertificadosEsteticaDiplo.css';
 
 // Importa tu imagen de fondo
 import backgroundImage from '../../../public/certificadosestetica.png';
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   
 });
 
-const CertificadosEstetica = () => {
+const CertificadosEsteticaDiplo = () => {
   const [userData, setUserData] = useState(null);
   const [selectedOption, setSelectedOption] = useState({});
   const [selectedDate, setSelectedDate] = useState("");
@@ -98,9 +98,8 @@ const CertificadosEstetica = () => {
   const [invoiceDate, setInvoiceDate] = useState(""); // Estado para manejar la fecha de la factura
 
   const [cursosDisponibles, setCursosDisponibles] = useState([
-    { nombre: "SUEROTERAPIA INHALATORIA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
-    { nombre: "MESOTERAPIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101263.` },
-    { nombre: "HIDROLIPOCLASIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
+    { nombre: "SUEROTERAPIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
+    { nombre: "SUEROTERAPIA AVANZADA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` }
   ]);
 
   const [isDataReady, setIsDataReady] = useState(false);
@@ -214,7 +213,7 @@ const CertificadosEstetica = () => {
 
   {/* Lista desplegable para seleccionar el curso */}
   <select onChange={handleSelectChange} className='dropdown w-3/4 p-2 border border-gray-300 rounded-md mt-4'>
-    <option value="">Seleccione un curso</option>
+    <option value="">Seleccione un diplomado</option>
     {cursosDisponibles.map((curso, index) => (
       <option key={index} value={curso.nombre}>{curso.nombre}</option>
     ))}
@@ -276,7 +275,7 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate}) => {
         <View key={user.id}>
         <Text style={styles.name}>{user.nombres} {user.apellidos}</Text>
         <Text style={styles.identification}>{user.tipoIdentificacion} {user.numeroId}</Text>
-        <Text style={styles.textouno}>ASISTIÓ Y APROBÓ AL CURSO DE:</Text>
+        <Text style={styles.textouno}>ASISTIÓ Y APROBÓ AL DIPLOMADO EN:</Text>
         {/* Asegurar que selectedOption no es null antes de intentar renderizar su contenido */}
         {selectedOption && <Text style={styles.textocurso}>{selectedOption.nombre}</Text>}
         {/* Agregar texto legal del curso si selectedOption no es null */}
@@ -304,4 +303,4 @@ const getMonthName = (monthNumber) => {
   return monthNames[parseInt(monthNumber, 10) - 1];
 };
 
-export default CertificadosEstetica;
+export default CertificadosEsteticaDiplo;

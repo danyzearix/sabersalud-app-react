@@ -111,7 +111,8 @@ const FormularioRegistro = () => {
           <div className="bg-white p-6 rounded-b-md shadow-lg">
             <div className="text-center text-lg p-4 font-bold text-[#033047]">
               <p>A partir de este momento ingresa en calidad de estudiante de SaberSalud Centro de Capacitaciones.</p>
-              <p>Diligencie el formulario en su totalidad, antes de enviar verifique que la información sea correcta y lea atentamente nuestra política de TRATAMIENTO DE DATOS PERSONALES 🔐</p>
+              <p>Diligencie el formulario en su totalidad, antes de enviar verifique que la información sea correcta y lea atentamente nuestra política de TRATAMIENTO DE DATOS PERSONALES Y USO DE LA IMAGEN🔐</p>
+              <a href="https://sabersalud.co/wp-content/uploads/2024/05/AUTORIZACION-PARA-EL-TRATAMIENTO-DE-DATOS-PERSONALES-E-IMAGEN.pdf" target='_blank'>Ver política</a>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow-lg max-w-4xl mx-auto my-8 form-registro">
