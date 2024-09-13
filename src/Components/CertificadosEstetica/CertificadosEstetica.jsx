@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: "Montserrat",
     fontSize: 16,
-    marginTop: 15,
+    marginTop: 8,
   },
   textodos: {
     textAlign: 'center',
     fontFamily: "Montserrat",
     fontSize: 10,
-    marginTop: 15,
+    marginTop: 8,
     marginHorizontal: 30,
   },
   textocurso: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: "Montserrat",
     fontWeight: 'bold',
-    marginTop: 15,
+    marginTop: 6,
   },
   dropdown: {
     textAlign: 'center',
@@ -102,7 +102,8 @@ const CertificadosEstetica = () => {
     { nombre: "MESOTERAPIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101263.` },
     { nombre: "HIDROLIPOCLASIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
     { nombre: "AROMATERAPIA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL 230101297 .`},
-    { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`}
+    { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`},
+    { nombre: "ACTUALIZACIÓN EN TÉCNICA TRANSDÉRMICA BODYSHAPER", duracion: "10", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101263.`}
   ]);
 
   const [isDataReady, setIsDataReady] = useState(false);
