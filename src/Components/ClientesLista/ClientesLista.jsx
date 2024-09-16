@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
 
 const ClientesLista = () => {
     const [todosEstudiantes, setTodosEstudiantes] = useState([]);
@@ -8,21 +9,58 @@ const ClientesLista = () => {
     const [filtroNumeroId, setFiltroNumeroId] = useState('');
     const [pagina, setPagina] = useState(1);
 
+    // Cargar estudiantes paginados desde la API
     const cargarEstudiantesPaginados = async () => {
         try {
             const response = await axios.get(`https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes?page=${pagina}&limit=10`);
             setTodosEstudiantes(response.data);
-            setEstudiantes(response.data);
+            setEstudiantes(response.data);  // Se cargan los estudiantes completos para filtrar
         } catch (error) {
             console.error('Error al cargar los estudiantes:', error);
         }
     };
 
+    // Filtrar estudiantes por número de identificación
     const filtrarEstudiantesPorNumeroId = () => {
-        const filtrados = todosEstudiantes.filter(estudiante => estudiante.numeroId.includes(filtroNumeroId));
+        if (!filtroNumeroId) {
+            setEstudiantes(todosEstudiantes);  // Si el filtro está vacío, muestra todos los estudiantes
+            return;
+        }
+
+        const filtrados = todosEstudiantes.filter(estudiante => {
+            return estudiante.numeroId && estudiante.numeroId.includes(filtroNumeroId);  // Verifica que el número de ID exista y luego usa includes
+        });
         setEstudiantes(filtrados);
     };
 
+    // Descargar la base de datos como archivo Excel
+    const descargarBaseDatos = async () => {
+        try {
+            const response = await axios.get('https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes');
+            const estudiantesData = response.data;
+
+            // Transformar los cursos en cadenas de texto
+            const estudiantesConCursos = estudiantesData.map(estudiante => {
+                const cursosTexto = estudiante.cursos.map(curso => 
+                    `${curso.nombreCurso} (Vencimiento: ${new Date(curso.vencimiento).toLocaleDateString()})`
+                ).join(', ');
+                return {
+                    ...estudiante,
+                    cursos: cursosTexto  // Reemplaza el array de cursos por el string resultante
+                };
+            });
+
+            // Crear y descargar el archivo Excel
+            const worksheet = XLSX.utils.json_to_sheet(estudiantesConCursos);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Estudiantes');
+            XLSX.writeFile(workbook, 'estudiantes.xlsx');
+        } catch (error) {
+            console.error('Error al descargar la base de datos:', error);
+        }
+    };
+
+    // Mostrar detalles de un estudiante
     const mostrarDetalles = (estudiante) => {
         Swal.fire({
             title: `${estudiante.nombres} ${estudiante.apellidos}`,
@@ -34,11 +72,13 @@ const ClientesLista = () => {
                 <p><b>Ciudad:</b> ${estudiante.ciudadResidencia}</p>
                 <p><b>Dirección:</b> ${estudiante.direccion}</p>
                 <p><b>Apodo:</b> ${estudiante.comoTeGustariaQueTeLlamen}</p>
+                <p><b>Profesión:</b> ${estudiante.profesion}</p>
             `,
             icon: 'info'
         });
     };
 
+    // Editar los detalles de un estudiante
     const editarEstudiante = (estudiante) => {
         Swal.fire({
             title: `Editar ${estudiante.nombres} ${estudiante.apellidos}`,
@@ -74,10 +114,11 @@ const ClientesLista = () => {
             }
         });
     };
-    
+
+    // Actualizar los datos de un estudiante
     const actualizarEstudiante = async (id, datos) => {
         try {
-            const response = await axios.put(`https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes/${id}`, datos);
+            await axios.put(`https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes/${id}`, datos);
             Swal.fire('¡Actualizado!', 'Los datos del estudiante han sido actualizados.', 'success');
             cargarEstudiantesPaginados();  // Recargar los estudiantes para reflejar los cambios
         } catch (error) {
@@ -85,6 +126,7 @@ const ClientesLista = () => {
         }
     };
 
+    // Efecto para cargar los estudiantes paginados cuando se cambia de página
     useEffect(() => {
         cargarEstudiantesPaginados();
     }, [pagina]);
@@ -106,50 +148,54 @@ const ClientesLista = () => {
                     Buscar
                 </button>
             </div>
+            <button
+                className="btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg mb-4"
+                onClick={descargarBaseDatos}
+            >
+                Descargar Base de Datos
+            </button>
             <table className='table w-full border-collapse shadow-lg'>
                 <thead className='bg-gray-100'>
                     <tr>
                         <th className='border p-4'>Nombre</th>
                         <th className='border p-4'>Número de Identificación</th>
-                        
-<th className='border p-4'>Cursos</th>
-<th className='border p-4'>Acciones</th>
-</tr>
-</thead>
-<tbody>
-{estudiantes.map((estudiante, index) => (
-<tr key={index} className='hover:bg-gray-50'>
-<td className='border p-4'>{estudiante.nombres} {estudiante.apellidos}</td>
-<td className='border p-4'>{estudiante.numeroId}</td>
-<td className='border p-4'>
-{estudiante.cursos.map((curso, i) => (
-<div key={i}>
-<div>{curso.nombreCurso}</div>
-<div className='text-gray-600 text-sm'>{new Date(curso.vencimiento).toLocaleDateString()}</div>
-</div>
-))}
-</td>
-<td className='border p-4 text-center'>
-    <button
-        className="btn bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded-lg mr-2 mb-1"
-        onClick={() => mostrarDetalles(estudiante)}
-    >
-        Ver 
-    </button>
-    <button
-        className="btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded-lg"
-        onClick={() => editarEstudiante(estudiante)}
-    >
-        Editar
-    </button>
-</td>
-
-</tr>
-))}
-</tbody>
-</table>
-</div>
-);
+                        <th className='border p-4'>Cursos</th>
+                        <th className='border p-4'>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {estudiantes.map((estudiante, index) => (
+                        <tr key={index} className='hover:bg-gray-50'>
+                            <td className='border p-4'>{estudiante.nombres} {estudiante.apellidos}</td>
+                            <td className='border p-4'>{estudiante.numeroId}</td>
+                            <td className='border p-4'>
+                                {estudiante.cursos.map((curso, i) => (
+                                    <div key={i}>
+                                        <div>{curso.nombreCurso}</div>
+                                        <div className='text-gray-600 text-sm'>{new Date(curso.vencimiento).toLocaleDateString()}</div>
+                                    </div>
+                                ))}
+                            </td>
+                            <td className='border p-4 text-center'>
+                                <button
+                                    className="btn bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded-lg mr-2 mb-1"
+                                    onClick={() => mostrarDetalles(estudiante)}
+                                >
+                                    Ver 
+                                </button>
+                                <button
+                                    className="btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded-lg"
+                                    onClick={() => editarEstudiante(estudiante)}
+                                >
+                                    Editar
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
 export default ClientesLista;

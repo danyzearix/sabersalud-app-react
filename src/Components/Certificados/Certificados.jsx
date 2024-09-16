@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat",
     fontWeight: 'bold',
     marginTop: 15,
-    marginRight: 10,
-    marginLeft: 10,
+    marginRight: 12,
+    marginLeft: 12,
   },
   dropdown: {
     textAlign: 'center',
@@ -264,24 +264,24 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
 
 
   useEffect(() => {
-    // Esta función ahora es condicional basada en si numeroId tiene valor
     const fetchUserData = async () => {
       try {
         let url = 'https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes';
-        if (numeroId) {
+        if (numeroId.length >= 5) { // Asegúrate de que el número de ID tenga al menos 5 caracteres
           url += `/numeroId/${numeroId}`;
         }
         
         const response = await axios.get(url);
         console.log('Respuesta de la API:', response);
         
-        setUserData(numeroId ? [response.data] : response.data);
+        setUserData(numeroId.length >= 5 ? [response.data] : response.data);
       } catch (error) {
         console.error('Error al obtener los datos del usuario:', error);
       }
     };
 
-    if (numeroId) {
+    // Llama a fetchUserData solo si numeroId tiene al menos 5 caracteres
+    if (numeroId.length >= 6) {
       fetchUserData();
     }
   }, [numeroId]);
@@ -343,7 +343,7 @@ EDUCACIÓN INFORMAL  DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓ
   // Debounce handler
   const handleCourseValueChange = debounce((value) => {
     setCourseValue(value);
-  }, 300); // Ajusta el tiempo de espera según la necesidad
+  }, 800); // Ajusta el tiempo de espera según la necesidad
 
   
   const handleInvoiceDateChange = (event) => {
