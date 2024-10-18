@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: "Montserrat",
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 15,
   },
   textodos: {
     textAlign: 'center',
     fontFamily: "Montserrat",
     fontSize: 10,
-    marginTop: 8,
+    marginTop: 15,
     marginHorizontal: 30,
   },
   textocurso: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: "Montserrat",
     fontWeight: 'bold',
-    marginTop: 6,
+    marginTop: 15,
   },
   dropdown: {
     textAlign: 'center',
@@ -103,7 +103,8 @@ const CertificadosEstetica = () => {
     { nombre: "HIDROLIPOCLASIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
     { nombre: "AROMATERAPIA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL 230101297 .`},
     { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`},
-    { nombre: "ACTUALIZACIÓN EN TÉCNICA TRANSDÉRMICA BODYSHAPER", duracion: "10", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101263.`}
+    { nombre: "PLASMA RICO EN PLAQUETAS (ESTÉTICO)", duracion: "30", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`},
+    { nombre: "INYECTOLOGÍA APLICADA A LA ESTÉTICA", duracion: "30", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`}
   ]);
 
   const [isDataReady, setIsDataReady] = useState(false);
@@ -201,7 +202,7 @@ const CertificadosEstetica = () => {
     <div className='container flex flex-col items-center justify-center min-h-screen bg-soft-pink'>
     
     <img
-    src="https://saberestetica.com/wp-content/uploads/2023/06/Saber-Estetica-Logo-Nuevo-02.png"
+    src="https://estetica.sabersalud.co/wp-content/uploads/2023/06/Saber-Estetica-Logo-Nuevo-02-e1729266221384.png"
     alt="Descripción de la imagen"
     className="w-1/4 my-4" // Ajusta el tamaño y el margen según sea necesario
     />
@@ -256,7 +257,7 @@ const CertificadosEstetica = () => {
   {/* Link para descargar el PDF */}
   <PDFDownloadLink 
     document={<CertificadosPDF userData={userData} selectedOption={selectedOption} selectedDate={selectedDate}/>} 
-    fileName={`${userData && userData[0] ? `${userData[0].nombres}  ${userData[0].apellidos}` : 'Usuario'}-${selectedOption || 'Curso'} ${estampilla} - Certificado.pdf`}
+    fileName={`${userData && userData[0] ? `${userData[0].nombres} ${userData[0].apellidos}` : 'Usuario'}-${selectedOption && selectedOption.nombre ? selectedOption.nombre : 'Curso'} ${estampilla} - Certificado.pdf`}
     className="btn-descargar-pdf mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
     {({ blob, url, loading, error }) => (loading ? 'Generando PDF...' : 'Paso 2: Descargar Certificado')}
   </PDFDownloadLink>
