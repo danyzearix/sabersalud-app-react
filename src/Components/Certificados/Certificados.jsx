@@ -8,9 +8,12 @@ import "../../Fonts/fonts.css"
 
 
 // Importa tu imagen de fondo
-import backgroundImage from '../../../public/certificado.png';
+const backgroundImage = 'https://sabersalud.co/wp-content/uploads/2025/01/plantilla-sabersalud-1.png';
 
 // Estilos para el documento PDF
+Font.registerHyphenationCallback((word) => {
+  return [word]; // Deja las palabras completas sin división
+});
 
 // Registra la fuente
 Font.register({
@@ -29,67 +32,80 @@ Font.register({
 
 const styles = StyleSheet.create({
   page: {
+    display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
     width: '792px', // Ancho de una hoja carta en orientación horizontal
     height: '612px', // Alto de una hoja carta en orientación horizontal
   },
-  section: {
-    margin: 0,
-    padding: 0,
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
+  column: {
+    flex: 1,
+    marginHorizontal: 10,
+    padding: 5,
   },
   name: {
     textTransform: 'uppercase',
-    fontFamily: 'Dancing Script',
+    fontFamily: 'Montserrat',
+    fontWeight: "900",
     textAlign: 'center',
-    fontSize: 30,
-    marginBottom: 10,
-    paddingTop: 175, // Agrega un espacio entre los elementos de nombre y identificación
+    color: '#1D163A',
+    fontSize: 25,
+    marginHorizontal: 40,
+    paddingTop: 220, // Agrega un espacio entre los elementos de nombre y identificación
+    marginBottom: 30,
   },
   identification: {
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 16,
     fontFamily: "Montserrat",
-    fontWeight: "bold"
+    fontWeight: "normal",
   },
   textouno: {
     textAlign: 'center',
     fontFamily: "Montserrat",
-    fontSize: 16,
-    marginTop: 15,
+    fontWeight: 'bold',
+    fontSize: 12,
+    marginTop: 45,
+    color:'#ffffff'
   },
   textodos: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontFamily: "Montserrat",
     fontSize: 10,
-    marginTop: 25,
-    marginHorizontal: 30,
+    marginTop: 100,
+    marginHorizontal: 10,
+    color:'#ffffff',
   },
   textofecha: {
     textAlign: 'center',
     fontFamily: "Montserrat",
-    fontSize: 10,
-    marginTop: 15,
+    fontWeight:'bold',
+    fontSize: 14,
+    marginTop:'50',
     marginHorizontal: 30,
+    color:'#ffffff'
   },
   textovalido: {
     textAlign: 'center',
     fontFamily: "Montserrat",
     fontSize: 12,
     marginTop: 15,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color:'#ffffff'
   },
   textocurso: {
+    height: 100,
     textAlign: 'center',
     fontSize: 20,
     fontFamily: "Montserrat",
-    fontWeight: 'bold',
-    marginTop: 15,
-    marginRight: 12,
-    marginLeft: 12,
+    fontWeight: '900',
+    marginRight: 2,
+    marginLeft: 2,
+    marginTop:'30',
+    color: '#E2E419',
+    wordBreak: 'keep-all', // No divide palabras en líneas
+    overflowWrap: 'normal', // Asegura que no se corten palabras
+    whiteSpace: 'pre-wrap', // Mantiene el formato y ajusta líneas completas
   },
   dropdown: {
     textAlign: 'center',
@@ -100,14 +116,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    zIndex: -1
   },
   timestamp: {
     textAlign: 'center',
     fontSize: 8,
     color: "#8C8C8C",
     marginTop: 6,
-  } 
+    color:'#ffffff'
+  },
+  textoconcordancia: {
+    textAlign: 'left',           // Alineado a la izquierda
+    fontSize: 9,                // Tamaño de fuente adecuado
+    fontFamily: "Montserrat",    // Fuente consistente con el diseño              // Espacio superior
+    marginHorizontal: 10,        // Márgenes laterales para ajustar el texto
+    whiteSpace: 'pre-wrap',      // Respeta los saltos de línea
+    lineHeight: 1,
+    color:'#ffffff'             // Espaciado entre líneas para mejor legibilidad
+  },
   
 });
 
@@ -190,7 +215,7 @@ const Certificados = () => {
 { nombre: "ATENCIÓN A VÍCTIMAS DE CONFLICTO ARMADO (PAPSIVI)", duracion: "40", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL 230101267.`},
 { nombre: "TELEMEDICINA", duracion: "20", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`},
 { nombre: "POCT", duracion: "20", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL 230101064.`},
-{ nombre: "PCTICAS CLÍNICAS BASADAS EN LA EVIDENCIA", duracion: "20", textoLegal: `SEGÚN LA RESOLUCION 3100 DEL 2019 DEL MINISTERIO DE SALUD Y PROTECCION SOCIAL, EDUCACIÓN INFORMAL, RESOLUCIÓN 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL, LA GUÍA PEDAGÓGICA PARA LA IMPLEMENTACIÓN DE GUÍAS DE PRÁCTICA CLÍNICA BASADAS EN LA EVIDENCIA Y EL OBSERVATORIO NACIONAL DE CALIDAD EN SALUD.`},
+{ nombre: "PRÁCTICAS CLÍNICAS BASADAS EN LA EVIDENCIA", duracion: "20", textoLegal: `SEGÚN LA RESOLUCION 3100 DEL 2019 DEL MINISTERIO DE SALUD Y PROTECCION SOCIAL, EDUCACIÓN INFORMAL, RESOLUCIÓN 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL, LA GUÍA PEDAGÓGICA PARA LA IMPLEMENTACIÓN DE GUÍAS DE PRÁCTICA CLÍNICA BASADAS EN LA EVIDENCIA Y EL OBSERVATORIO NACIONAL DE CALIDAD EN SALUD.`},
   ]);
 
   const [isDataReady, setIsDataReady] = useState(false);
@@ -353,40 +378,59 @@ const Certificados = () => {
   );
 };
 
-const CertificadosPDF = ({ userData, selectedOption, selectedDate}) => {
-  const timestamp = Date.now(); 
+// Función para calcular el tamaño de fuente dinámico
+const calculateFontSize = (text) => {
+  const wordCount = text.split(' ').length;
+
+  // Ajusta el tamaño de la fuente basado en el número de palabras
+  if (wordCount <= 18) return 35; // Texto corto
+  return 20; // Texto largo
+};
+
+const CertificadosPDF = ({ userData, selectedOption, selectedDate }) => {
+  const timestamp = Date.now();
   return (
     <Document>
-  <Page size="letter" orientation="landscape" style={styles.page}>
-    {/* Agrega la imagen de fondo */}
-    <Image src={backgroundImage} style={styles.backgroundImage} />
+      <Page size="letter" orientation="landscape" style={styles.page}>
+        {/* Agrega la imagen de fondo */}
+        <Image src={backgroundImage} style={styles.backgroundImage} />
+        <View style={styles.page}>
+          {/* Renderizar los campos del usuario si se han encontrado */}
+          {userData && userData.map((user) => (
+            <View key={user.id} style={{ flexDirection: 'row', flex: 1 }}>
+              {/* Columna izquierda */}
+              <View style={styles.column}>
+                <Text style={styles.name}>{user.nombres} {user.apellidos}</Text>
+                <Text style={styles.identification}>
+                  {user.tipoIdentificacion} {user.numeroId}
+                </Text>
+              </View>
 
-    <View style={styles.section}>
-      {/* Renderizar los campos del usuario si se han encontrado */}
-      {userData && userData.map(user => (
-        <View key={user.id}>
-        <Text style={styles.name}>{user.nombres} {user.apellidos}</Text>
-        <Text style={styles.identification}>{user.tipoIdentificacion} {user.numeroId}</Text>
-        <Text style={styles.textouno}>ASISTIÓ Y APROBÓ AL CURSO DE:</Text>
-        {/* Asegurar que selectedOption no es null antes de intentar renderizar su contenido */}
-        {selectedOption && <Text style={styles.textocurso}>{selectedOption.nombre}</Text>}
-        {/* Agregar texto legal del curso si selectedOption no es null */}
-        {selectedOption && <Text style={styles.textodos}>
-          {selectedOption.textoLegal}
-        </Text>}
-        {selectedDate && selectedOption && (
-          <Text style={styles.textofecha}>
-            DADO A LOS {selectedDate.split('-')[2]} DÍAS DEL MES DE {getMonthName(selectedDate.split('-')[1]).toUpperCase()} DEL AÑO {selectedDate.split('-')[0]}, CON UNA DURACIÓN DE {selectedOption.duracion} HORAS EN BOGOTÁ D.C.
-          </Text>
-        )}
-        <Text style={styles.textovalido}>VÁLIDO POR 2 AÑOS</Text>
-        <Text style={styles.timestamp}>SS{timestamp}IT</Text>
-      </View>
-      ))}
-    </View>
-  </Page>
-</Document>
-    
+              {/* Columna derecha */}
+              <View style={styles.column}>
+                <Text style={styles.textouno}>ASISTIÓ Y APROBÓ AL CURSO DE:</Text>
+                {/* Asegurar que selectedOption no es null antes de intentar renderizar su contenido */}
+                {selectedOption && <Text style={styles.textocurso} wrap>{selectedOption.nombre}</Text>}
+                {/* Agregar texto legal del curso si selectedOption no es null */}
+                {selectedOption && (
+                  <Text style={styles.textodos}>
+                    En concordancia con:
+                    {"\n"}{"\n"}- Resolución 3100 de 2019 MINSALUD{"\n"}- NCLS No. 230101267{"\n"}- Lineamientos AHA
+                  </Text>  
+                )}
+                {selectedDate && selectedOption && (
+                  <Text style={styles.textofecha}>
+                  {getMonthName(selectedDate.split('-')[1]).toUpperCase()} {selectedDate.split('-')[2]} DEL {selectedDate.split('-')[0]}{"\n"}INTENSIDAD HORARIA {selectedOption.duracion} HORAS.
+                  </Text>
+                )}
+                <Text style={styles.textovalido}>VÁLIDO POR 2 AÑOS</Text>
+                <Text style={styles.timestamp}>SS{timestamp}IT</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </Page>
+    </Document>
   );
 };
 
