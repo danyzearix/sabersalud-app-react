@@ -2,9 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './Components/Layout/Layout';
 import Certificados from './Components/Certificados/Certificados';
-import CertificadosDiplo from './Components/CertificadosDiplo/CertificadosDiplo';
+import CertificadosSer from './Components/CertificadosSer/CertificadosSer';
 import CertificadosEstetica from './Components/CertificadosEstetica/CertificadosEstetica';
-import CertificadosEsteticaDiplo from './Components/CertificadosEsteticaDiplo/CertificadosEsteticaDiplo';
 import FormularioRegistro from './Components/FormularioRegistro/FormularioRegistro';
 import ClientesLista from './Components/ClientesLista/ClientesLista';
 import Validacion from './Components/Validacion/Validacion';
@@ -28,9 +27,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<RequireAuth><Layout><Home></Home></Layout></RequireAuth>} />
         <Route path="/certificados" element={<RequireAuth><Layout><Certificados /></Layout></RequireAuth>} />
-        <Route path="/certificados-diplo" element={<RequireAuth><Layout><CertificadosDiplo /></Layout></RequireAuth>} />
         <Route path="/certificados-estetica" element={<RequireAuth><Layout><CertificadosEstetica /></Layout></RequireAuth>} />
-        <Route path="/certificados-estetica-diplo" element={<RequireAuth><Layout><CertificadosEsteticaDiplo /></Layout></RequireAuth>} />
+        <Route path="/certificados-ser" element={<RequireAuth><Layout><CertificadosSer /></Layout></RequireAuth>} />
         <Route path="/clientes" element={<RequireAuth><Layout><ClientesLista /></Layout></RequireAuth>} />
         <Route path="/formulario-registro" element={<FormularioRegistro />} />
         <Route path="/validacion" element={<Validacion />} />

@@ -29,16 +29,13 @@ const Sidebar = () => {
         <a href="https://app.sabersalud.co/" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
           Inicio 🏠</a>
         <a href="https://app.sabersalud.co/certificados" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
-          Certificados Cursos SaberSalud 🩺
-        </a>
-        <a href="https://app.sabersalud.co/certificados-diplo" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
-          Certificados Diplomados SaberSalud 🩺
+          Certificados SaberSalud 🩺
         </a>
         <a href="https://app.sabersalud.co/certificados-estetica" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
-          Certificados Cursos Estetica 💅
+          Certificados SaberEstetica 💅
         </a>
-        <a href="https://app.sabersalud.co/certificados-estetica-diplo" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
-          Certificados Diplomados Estetica 💅
+        <a href="https://app.sabersalud.co/certificados-ser" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold">
+          Certificados SaberSer 🌀
         </a>
         <a href="https://app.sabersalud.co/formulario-registro" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white font-bold" target="_blank">
           Crear cliente 💾

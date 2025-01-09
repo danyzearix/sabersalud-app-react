@@ -1,73 +1,111 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { debounce } from 'lodash';
 import { Document, Page, Text, View, StyleSheet, Image, PDFDownloadLink, Font } from '@react-pdf/renderer';
 import Swal from 'sweetalert2';
 import './CertificadosEstetica.css';
+import "../../Fonts/fonts.css"
+
 
 // Importa tu imagen de fondo
-import backgroundImage from '../../../public/certificadosestetica.png';
+const backgroundImage = 'https://sabersalud.co/wp-content/uploads/2025/01/plantilla-saberesteticav1.png';
 
 // Estilos para el documento PDF
+Font.registerHyphenationCallback((word) => {
+  return [word]; // Deja las palabras completas sin división
+});
 
-/// Registra la fuente Dancing Script desde Google Fonts
+// Registra la fuente
 Font.register({
-    family: 'Dancing Script',
-    src: 'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap'
-  });
-  
-  // Registrar Montserrat desde Google Fonts
-  Font.register({
-    family: 'Montserrat',
-    src: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'
-  });
+  family: 'Dancing Script',
+  src: 'https://sabersalud.co/DancingScript-Regular.ttf'
+});
+
+// Registrar Montserrat-Regular
+Font.register({
+  family: 'Montserrat',
+  fonts: [
+    { src: 'https://sabersalud.co/Montserrat-Regular.ttf' }, // Ruta relativa al archivo Montserrat Regular
+    { src: 'https://sabersalud.co/Montserrat-Bold.ttf', fontWeight: 'bold' } // Ruta relativa al archivo Montserrat Bold
+  ]
+});
 
 const styles = StyleSheet.create({
   page: {
+    display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
     width: '792px', // Ancho de una hoja carta en orientación horizontal
     height: '612px', // Alto de una hoja carta en orientación horizontal
   },
-  section: {
-    margin: 0,
-    padding: 0,
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
+  column: {
+    flex: 1,
+    marginHorizontal: 10,
+    padding: 5,
   },
   name: {
     textTransform: 'uppercase',
-    fontFamily: 'Dancing Script',
+    fontFamily: 'Montserrat',
+    fontWeight: "900",
     textAlign: 'center',
-    fontSize: 30,
-    marginBottom: 10,
-    paddingTop: 208, // Agrega un espacio entre los elementos de nombre y identificación
+    color: '#1D163A',
+    fontSize: 25,
+    marginHorizontal: 40,
+    paddingTop: 220, // Agrega un espacio entre los elementos de nombre y identificación
+    marginBottom: 30,
   },
   identification: {
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 16,
     fontFamily: "Montserrat",
-    fontWeight: "bold"
+    fontWeight: "normal",
   },
   textouno: {
     textAlign: 'center',
     fontFamily: "Montserrat",
-    fontSize: 16,
-    marginTop: 15,
+    fontWeight: 'bold',
+    fontSize: 12,
+    marginTop: 45,
+    color:'#ffffff'
   },
   textodos: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontFamily: "Montserrat",
     fontSize: 10,
-    marginTop: 15,
+    marginTop: 100,
+    marginHorizontal: 10,
+    color:'#ffffff',
+  },
+  textofecha: {
+    textAlign: 'center',
+    fontFamily: "Montserrat",
+    fontWeight:'bold',
+    fontSize: 14,
+    marginTop:'50',
     marginHorizontal: 30,
+    color:'#ffffff'
+  },
+  textovalido: {
+    textAlign: 'center',
+    fontFamily: "Montserrat",
+    fontSize: 12,
+    marginTop: 15,
+    fontWeight: "bold",
+    color:'#ffffff'
   },
   textocurso: {
+    height: 100,
     textAlign: 'center',
-    fontSize: 28,
+    fontSize: 20,
     fontFamily: "Montserrat",
-    fontWeight: 'bold',
-    marginTop: 15,
+    fontWeight: '900',
+    marginRight: 2,
+    marginLeft: 2,
+    marginTop:'30',
+    color: '#E2E419',
+    wordBreak: 'keep-all', // No divide palabras en líneas
+    overflowWrap: 'normal', // Asegura que no se corten palabras
+    whiteSpace: 'pre-wrap', // Mantiene el formato y ajusta líneas completas
   },
   dropdown: {
     textAlign: 'center',
@@ -78,14 +116,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    zIndex: -1
   },
   timestamp: {
     textAlign: 'center',
     fontSize: 8,
     color: "#8C8C8C",
-    marginTop: 18,
-  } 
+    marginTop: 6,
+    color:'#ffffff'
+  },
+  textoconcordancia: {
+    textAlign: 'left',           // Alineado a la izquierda
+    fontSize: 9,                // Tamaño de fuente adecuado
+    fontFamily: "Montserrat",    // Fuente consistente con el diseño              // Espacio superior
+    marginHorizontal: 10,        // Márgenes laterales para ajustar el texto
+    whiteSpace: 'pre-wrap',      // Respeta los saltos de línea
+    lineHeight: 1,
+    color:'#ffffff'             // Espaciado entre líneas para mejor legibilidad
+  },
   
 });
 
@@ -98,38 +145,39 @@ const CertificadosEstetica = () => {
   const [invoiceDate, setInvoiceDate] = useState(""); // Estado para manejar la fecha de la factura
 
   const [cursosDisponibles, setCursosDisponibles] = useState([
-    { nombre: "SUEROTERAPIA INHALATORIA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
-    { nombre: "MESOTERAPIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101263.` },
-    { nombre: "HIDROLIPOCLASIA", duracion: "40", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL No. 230101259.` },
-    { nombre: "AROMATERAPIA", duracion: "20", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 del 2015 MINISTERIO DE EDUCACIÓN NACIONAL Y LA NORMA DE COMPETENCIA LABORAL 230101297 .`},
-    { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`},
-    { nombre: "PLASMA RICO EN PLAQUETAS (ESTÉTICO)", duracion: "30", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`},
-    { nombre: "INYECTOLOGÍA APLICADA A LA ESTÉTICA", duracion: "30", textoLegal: `SEGÚN RESOLUCIÓN 3100 DE 2019 MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL, EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`},
-    { nombre: "MAQUILLAJE DE FANTASÍA BÁSICA", duracion: "10", textoLegal: `EDUCACIÓN INFORMAL DE ACUERDO AL DECRETO 1075 DEL 2015 MINISTERIO DE EDUCACIÓN NACIONAL.`}
+    { nombre: "SUEROTERAPIA INHALATORIA", duracion: "20", textoLegal: `No. 230101259.`, tipo:"CURSO" },
+    { nombre: "MESOTERAPIA", duracion: "40", textoLegal: `No. 230101263.` , tipo:"CURSO" },
+    { nombre: "HIDROLIPOCLASIA", duracion: "40", textoLegal: `No. 230101259.` , tipo:"CURSO" },
+    { nombre: "AROMATERAPIA", duracion: "20", textoLegal: `No. 230101297 .` , tipo:"CURSO"},
+    { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `.`, tipo:"CURSO"},
+    { nombre: "PLASMA RICO EN PLAQUETAS (ESTÉTICO)", duracion: "30", textoLegal: `.`},
+    { nombre: "INYECTOLOGÍA APLICADA A LA ESTÉTICA", duracion: "30", textoLegal: `.`},
+    { nombre: "MAQUILLAJE DE FANTASÍA BÁSICA", duracion: "10", textoLegal: `.`}
+
   ]);
 
   const [isDataReady, setIsDataReady] = useState(false);
 
 
   useEffect(() => {
-    // Esta función ahora es condicional basada en si numeroId tiene valor
     const fetchUserData = async () => {
       try {
         let url = 'https://sabersalud-backend-e0a3010fab41.herokuapp.com/api/estudiantes';
-        if (numeroId) {
+        if (numeroId.length >= 5) { // Asegúrate de que el número de ID tenga al menos 5 caracteres
           url += `/numeroId/${numeroId}`;
         }
         
         const response = await axios.get(url);
         console.log('Respuesta de la API:', response);
         
-        setUserData(numeroId ? [response.data] : response.data);
+        setUserData(numeroId.length >= 5 ? [response.data] : response.data);
       } catch (error) {
         console.error('Error al obtener los datos del usuario:', error);
       }
     };
 
-    if (numeroId) {
+    // Llama a fetchUserData solo si numeroId tiene al menos 5 caracteres
+    if (numeroId.length >= 6) {
       fetchUserData();
     }
   }, [numeroId]);
@@ -179,7 +227,7 @@ const CertificadosEstetica = () => {
     const cursoNombre = event.target.value;
     const curso = cursosDisponibles.find(curso => curso.nombre === cursoNombre);
     setSelectedOption(curso);  // Ahora guarda el objeto completo
-    console.log("Curso seleccionado:", curso.textoLegal); 
+    console.log("Curso seleccionado:", curso); 
   };
 
   // Función para manejar el cambio en la fecha seleccionada
@@ -188,9 +236,11 @@ const CertificadosEstetica = () => {
     console.log("Fecha seleccionada:", event.target.value);
   };
 
-  const handleCourseValueChange = (event) => {
-    setCourseValue(event.target.value);
-  };
+  // Debounce handler
+  const handleCourseValueChange = debounce((value) => {
+    setCourseValue(value);
+  }, 800); // Ajusta el tiempo de espera según la necesidad
+
   
   const handleInvoiceDateChange = (event) => {
     setInvoiceDate(event.target.value);
@@ -200,14 +250,12 @@ const CertificadosEstetica = () => {
 
 
   return (
-    <div className='container flex flex-col items-center justify-center min-h-screen bg-soft-pink'>
-    
-    <img
-    src="https://estetica.sabersalud.co/wp-content/uploads/2023/06/Saber-Estetica-Logo-Nuevo-02-e1729266221384.png"
-    alt="Descripción de la imagen"
-    className="w-1/4 my-4" // Ajusta el tamaño y el margen según sea necesario
-    />
-  
+    <div className='container flex flex-col items-center justify-center min-h-screen'>
+      <img
+      src="https://sabersalud.co/wp-content/uploads/2020/10/Logo-Color-Original-Horizontal-con-Eslogan-Tiny.png"
+      alt="Descripción de la imagen"
+      className="w-1/4 my-4" // Ajusta el tamaño y el margen según sea necesario
+      />
   {/* Input para ingresar numeroId */}
   <input
     type="text"
@@ -219,29 +267,28 @@ const CertificadosEstetica = () => {
 
   {/* Lista desplegable para seleccionar el curso */}
   <select onChange={handleSelectChange} className='dropdown w-3/4 p-2 border border-gray-300 rounded-md mt-4'>
-    <option value="">Seleccione un curso</option>
+    <option value="">Seleccione un curso o diplomado</option>
     {cursosDisponibles.map((curso, index) => (
       <option key={index} value={curso.nombre}>{curso.nombre}</option>
     ))}
   </select>
 
   <input
-  type="number"
-  value={courseValue}
-  onChange={handleCourseValueChange} 
-  className='input w-3/4 p-2 border border-gray-300 rounded-md mt-4'
-  placeholder='Ingresa el valor del curso'
-/>
-
+      type="number"
+      onChange={(event) => handleCourseValueChange(event.target.value)}
+      className='input input w-3/4 p-2 border border-gray-300 rounded-md'
+      placeholder='Ingresa el valor del curso'
+    />
+    
  {/* Selector de fecha */}
  <label className='w-3/4 text-center'>
- Selecciona la fecha del Certificado
+ Selecciona la fecha del <strong>Certificado:</strong>
   <input type="date" onChange={handleDateChange} className='date-input w-full p-2 border border-gray-300 rounded-md mt-4' />
   </label>
 
 {/* Input para ingresar la fecha de la factura */}
 <label className='w-3/4 text-center'>
-  Selecciona la fecha de la Factura:
+  Selecciona la fecha de la <strong>Factura:</strong>
   <input
     type="date"
     value={invoiceDate}
@@ -252,54 +299,76 @@ const CertificadosEstetica = () => {
 
   {/* Botón para preparar los datos del curso */}
   <button onClick={enviarCursoAUsuario} className="btn-descargar mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Paso 1: Guardar datos del certificado
+    Paso 1: Guardar datos del certificado 💾
   </button>
 
-  {/* Link para descargar el PDF */}
+  {/* Link para descargar el PDF s*/}
   <PDFDownloadLink 
     document={<CertificadosPDF userData={userData} selectedOption={selectedOption} selectedDate={selectedDate}/>} 
-    fileName={`${userData && userData[0] ? `${userData[0].nombres} ${userData[0].apellidos}` : 'Usuario'}-${selectedOption && selectedOption.nombre ? selectedOption.nombre : 'Curso'} ${estampilla} - Certificado.pdf`}
+    fileName={`${userData && userData[0] ? `${userData[0].nombres} ${userData[0].apellidos} ${userData[0].numeroId}` : 'Usuario'}-${selectedOption ? selectedOption.nombre : 'Curso'} - Certificado.pdf`}
+
     className="btn-descargar-pdf mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-    {({ blob, url, loading, error }) => (loading ? 'Generando PDF...' : 'Paso 2: Descargar Certificado')}
+    {({ blob, url, loading, error }) => (loading ? 'Generando PDF...' : 'Paso 2: Descargar Certificado 📑')}
   </PDFDownloadLink>
 </div>
+
 
   );
 };
 
-const CertificadosPDF = ({ userData, selectedOption, selectedDate}) => {
-  const timestamp = Date.now(); 
+// Función para calcular el tamaño de fuente dinámico
+const calculateFontSize = (text) => {
+  const wordCount = text.split(' ').length;
+
+  // Ajusta el tamaño de la fuente basado en el número de palabras
+  if (wordCount <= 18) return 35; // Texto corto
+  return 20; // Texto largo
+};
+
+const CertificadosPDF = ({ userData, selectedOption, selectedDate }) => {
+  const timestamp = Date.now();
   return (
     <Document>
-  <Page size="letter" orientation="landscape" style={styles.page}>
-    {/* Agrega la imagen de fondo */}
-    <Image src={backgroundImage} style={styles.backgroundImage} />
+      <Page size="letter" orientation="landscape" style={styles.page}>
+        {/* Agrega la imagen de fondo */}
+        <Image src={backgroundImage} style={styles.backgroundImage} />
+        <View style={styles.page}>
+          {/* Renderizar los campos del usuario si se han encontrado */}
+          {userData && userData.map((user) => (
+            <View key={user.id} style={{ flexDirection: 'row', flex: 1 }}>
+              {/* Columna izquierda */}
+              <View style={styles.column}>
+                <Text style={styles.name}>{user.nombres} {user.apellidos}</Text>
+                <Text style={styles.identification}>
+                  {user.tipoIdentificacion} {user.numeroId}
+                </Text>
+              </View>
 
-    <View style={styles.section}>
-      {/* Renderizar los campos del usuario si se han encontrado */}
-      {userData && userData.map(user => (
-        <View key={user.id}>
-        <Text style={styles.name}>{user.nombres} {user.apellidos}</Text>
-        <Text style={styles.identification}>{user.tipoIdentificacion} {user.numeroId}</Text>
-        <Text style={styles.textouno}>ASISTIÓ Y APROBÓ AL CURSO DE:</Text>
-        {/* Asegurar que selectedOption no es null antes de intentar renderizar su contenido */}
-        {selectedOption && <Text style={styles.textocurso}>{selectedOption.nombre}</Text>}
-        {/* Agregar texto legal del curso si selectedOption no es null */}
-        {selectedOption && <Text style={styles.textodos}>
-          {selectedOption.textoLegal}
-        </Text>}
-        {selectedDate && selectedOption && (
-          <Text style={styles.textodos}>
-            DADO A LOS {selectedDate.split('-')[2]} DÍAS DEL MES DE {getMonthName(selectedDate.split('-')[1]).toUpperCase()} DEL AÑO {selectedDate.split('-')[0]}, CON UNA DURACIÓN DE {selectedOption.duracion} HORAS EN BOGOTÁ D.C.
-          </Text>
-        )}
-        <Text style={styles.timestamp}>SE{timestamp}IT</Text>
-      </View>
-      ))}
-    </View>
-  </Page>
-</Document>
-    
+              {/* Columna derecha */}
+              <View style={styles.column}>
+                <Text style={styles.textouno}>ASISTIÓ Y APROBÓ EL {selectedOption.tipo} {console.log(selectedOption.tipo)}DE:</Text>
+                {/* Asegurar que selectedOption no es null antes de intentar renderizar su contenido */}
+                {selectedOption && <Text style={styles.textocurso} wrap>{selectedOption.nombre}</Text>}
+                {/* Agregar texto legal del curso si selectedOption no es null */}
+                {selectedOption && (
+                  <Text style={styles.textodos}>
+                    En concordancia con:
+                    {"\n"}{"\n"}- Resolución 3100 de 2019 MINSALUD{"\n"}- NCLS {selectedOption.textoLegal}{"\n"}{selectedOption.aha}
+                  </Text>  
+                )}
+                {selectedDate && selectedOption && (
+                  <Text style={styles.textofecha}>
+                  {getMonthName(selectedDate.split('-')[1]).toUpperCase()} {selectedDate.split('-')[2]} DEL {selectedDate.split('-')[0]}{"\n"}INTENSIDAD HORARIA {selectedOption.duracion} HORAS.
+                  </Text>
+                )}
+                <Text style={styles.textovalido}>VÁLIDO POR 2 AÑOS</Text>
+                <Text style={styles.timestamp}>SS{timestamp}IT</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </Page>
+    </Document>
   );
 };
 

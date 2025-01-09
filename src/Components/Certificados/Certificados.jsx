@@ -8,7 +8,7 @@ import "../../Fonts/fonts.css"
 
 
 // Importa tu imagen de fondo
-const backgroundImage = 'https://sabersalud.co/wp-content/uploads/2025/01/plantilla-sabersalud-1.png';
+const backgroundImage = 'https://sabersalud.co/wp-content/uploads/2025/01/plantilla-sabersaludfinalaha-1.png';
 
 // Estilos para el documento PDF
 Font.registerHyphenationCallback((word) => {
@@ -156,7 +156,6 @@ const Certificados = () => {
 { nombre: "ATENCIÓN INTEGRAL A VÍCTIMAS DE VIOLENCIA SEXUAL Y DE GÉNERO", duracion: "40", textoLegal: `No. 230101267`, tipo:"CURSO" },
 { nombre: "ATENCIÓN INTEGRAL AL RECIÉN NACIDO", duracion: "20", textoLegal: `No. 230101255.`, tipo:"CURSO" },
 { nombre: "ATENCIÓN INTEGRAL A VÍCTIMAS DE ATAQUES CON AGENTES QUÍMICOS", duracion: "40", textoLegal: `No. 230101267.`, tipo:"CURSO" },
-{ nombre: "ATENCIÓN INTEGRAL DE PACIENTE CRÍTICO NEONATAL UCIN", duracion: "120", textoLegal: ` No. 230101268.`, tipo:"CURSO" },
 { nombre: "ATENCIÓN INTEGRAL DEL PACIENTE CRÍTICO PEDIATRICO UCI ", duracion: "120", textoLegal: `No. 230101268.` , tipo:"CURSO"},
 { nombre: "ATENCIÓN INTEGRAL DE PACIENTE CRÍTICO UCI", duracion: "120", textoLegal: ` No. 230101268.`, tipo:"CURSO" },
 { nombre: "ATENCIÓN PRE-HOSPITALARIA APH", duracion: "40", textoLegal: ` No. 230101237.`, tipo:"CURSO" },
@@ -165,7 +164,6 @@ const Certificados = () => {
 { nombre: "BRIGADA DE EMERGENCIA EMPRESARIAL", duracion: "10", textoLegal: `No. 260401023.` , tipo:"CURSO"},
 { nombre: "BUENAS PRÁCTICAS DE MANUFACTURA (HIGIENE Y MANIPULACIÓN DE ALIMENTOS)", duracion: "10", textoLegal: `No. 290801023.` , tipo:"CURSO"},
 { nombre: "BUENAS PRÁCTICAS EN SEGURIDAD DE PACIENTE", duracion: "20", textoLegal: `No. 230101266` , tipo:"CURSO"},
-{ nombre: "CIRCULANTE DE SALAS DE CIRUGÍA ", duracion: "120", textoLegal: `No. 230101290` , tipo:"CURSO" },
 { nombre: "CONDUCCIÓN DE VEHÍCULOS DE EMERGENCIA COVE", duracion: "60", textoLegal: ` No. 280601012` , tipo:"CURSO"},
 { nombre: "CUIDADO INTEGRAL DEL PACIENTE ONCOLÓGICO", duracion: "40", textoLegal: `No 230101261` , tipo:"CURSO"},
 { nombre: "MANEJO DEL DOLOR Y CUIDADOS PALIATIVOS", duracion: "40", textoLegal: `No. 230101261` , tipo:"CURSO"},
@@ -215,12 +213,12 @@ const Certificados = () => {
 { nombre: "ATENCIÓN A VÍCTIMAS DE CONFLICTO ARMADO (PAPSIVI)", duracion: "40", textoLegal: `No. 230101267.`, tipo:"CURSO"},
 { nombre: "TELEMEDICINA", duracion: "20", textoLegal: `.`, tipo:"CURSO"},
 { nombre: "POCT", duracion: "20", textoLegal: `No.230101064.`, tipo:"CURSO"},
-{ nombre: "PRÁCTICAS CLÍNICAS BASADAS EN LA EVIDENCIA", duracion: "20", textoLegal: `.`, tipo:"CURSO"}, //Diplomados
-{ nombre: "ATENCIÓN INTEGRAL DE PACIENTE CRÍTICO NEONATAL UCIN", duracion: "120", textoLegal: `No. 230101268.`, tipo:"DIPLOMADO" },
-{ nombre: "ATENCIÓN INTEGRAL DEL PACIENTE CRÍTICO PEDIATRICO UCIP ", duracion: "120", textoLegal: `No. 230101268.` , tipo:"DIPLOMADO"},
-{ nombre: "ATENCIÓN INTEGRAL DE PACIENTE CRÍTICO UCI", duracion: "120", textoLegal: `No. 230101268.` , tipo:"DIPLOMADO"},
-{ nombre: "CIRCULANTE DE SALAS DE CIRUGÍA ", duracion: "120", textoLegal: `No. 230101290` , tipo:"DIPLOMADO"},
-{ nombre: "CUIDADO INTEGRAL AL PACIENTE RENAL ", duracion: "80", textoLegal: `No. 230101269` , tipo:"DIPLOMADO"},
+{ nombre: "PRÁCTICAS CLÍNICAS BASADAS EN LA EVIDENCIA", duracion: "20", textoLegal: `.`, tipo:"CURSO"},
+{ nombre: "ATENCIÓN INTEGRAL DE PACIENTE CRÍTICO NEONATAL UCIN", duracion: "120", textoLegal: `No. 230101268.`, tipo: "DIPLOMADO" },
+{ nombre: "ATENCIÓN INTEGRAL DEL PACIENTE CRÍTICO PEDIATRICO UCIP ", duracion: "120", textoLegal: `No. 230101268.` , tipo: "DIPLOMADO"},
+{ nombre: "ATENCIÓN INTEGRAL DE PACIENTE CRÍTICO UCI", duracion: "120", textoLegal: `No. 230101268.` , tipo: "DIPLOMADO"},
+{ nombre: "CIRCULANTE DE SALAS DE CIRUGÍA ", duracion: "120", textoLegal: `No. 230101290` , tipo: "DIPLOMADO"},
+{ nombre: "CUIDADO INTEGRAL AL PACIENTE RENAL ", duracion: "80", textoLegal: `No. 230101269` , tipo: "DIPLOMADO"},
 
   ]);
 
@@ -295,7 +293,7 @@ const Certificados = () => {
     const cursoNombre = event.target.value;
     const curso = cursosDisponibles.find(curso => curso.nombre === cursoNombre);
     setSelectedOption(curso);  // Ahora guarda el objeto completo
-    console.log("Curso seleccionado:", curso.textoLegal); 
+    console.log("Curso seleccionado:", curso); 
   };
 
   // Función para manejar el cambio en la fecha seleccionada
@@ -414,7 +412,7 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate }) => {
 
               {/* Columna derecha */}
               <View style={styles.column}>
-                <Text style={styles.textouno}>ASISTIÓ Y APROBÓ EL {selectedOption.tipo} DE:</Text>
+                <Text style={styles.textouno}>ASISTIÓ Y APROBÓ EL {selectedOption.tipo} {console.log(selectedOption.tipo)}DE:</Text>
                 {/* Asegurar que selectedOption no es null antes de intentar renderizar su contenido */}
                 {selectedOption && <Text style={styles.textocurso} wrap>{selectedOption.nombre}</Text>}
                 {/* Agregar texto legal del curso si selectedOption no es null */}
