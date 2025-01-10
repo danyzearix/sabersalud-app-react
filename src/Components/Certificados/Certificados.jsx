@@ -419,7 +419,7 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate }) => {
                 {selectedOption && (
                   <Text style={styles.textodos}>
                     En concordancia con:
-                    {"\n"}{"\n"}- Resolución 3100 de 2019 MINSALUD{"\n"}- NCLS {selectedOption.textoLegal}{"\n"}{selectedOption.aha}
+                    {"\n"}{"\n"}- Resolución 3100 MINSALUD{"\n"}- Norma de competencia laboral SENA vigente {"\n"}{selectedOption.aha}
                   </Text>  
                 )}
                 {selectedDate && selectedOption && (

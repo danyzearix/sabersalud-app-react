@@ -145,8 +145,9 @@ const CertificadosSer = () => {
   const [invoiceDate, setInvoiceDate] = useState(""); // Estado para manejar la fecha de la factura
 
   const [cursosDisponibles, setCursosDisponibles] = useState([
-    { nombre: "SUEROTERAPIA AVANZADA", duracion: "20", textoLegal: `No. 230101259.`, tipo:"CURSO" },
-    { nombre: "TERAPIA NEURAL", duracion: "40", textoLegal: `No. 230101259.` , tipo:"CURSO" },
+    { nombre: "SUEROTERAPIA AVANZADA", duracion: "40", textoLegal: `No. 230101259.`, tipo:"CURSO" },
+    { nombre: "TERAPIA NEURAL & HOMEOSINIATRÍA", duracion: "40", textoLegal: `No. 230101259.` , tipo:"CURSO" },
+    { nombre: "SUEROTERAPIA NO INVASIVA", duracion: "40", textoLegal: `No. 230101259.` , tipo:"CURSO" },
 
 
   ]);
@@ -348,7 +349,7 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate }) => {
                 {selectedOption && (
                   <Text style={styles.textodos}>
                     En concordancia con:
-                    {"\n"}{"\n"}- Resolución 3100 de 2019 MINSALUD{"\n"}- NCLS {selectedOption.textoLegal}{"\n"}{selectedOption.aha}
+                    {"\n"}{"\n"}- Resolución 3100 MINSALUD{"\n"}- Norma de competencia laboral SENA vigente {"\n"}{selectedOption.aha}
                   </Text>  
                 )}
                 {selectedDate && selectedOption && (
