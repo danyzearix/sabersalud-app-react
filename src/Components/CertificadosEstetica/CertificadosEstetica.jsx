@@ -151,7 +151,8 @@ const CertificadosEstetica = () => {
     { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `.`, tipo:"CURSO"},
     { nombre: "PLASMA RICO EN PLAQUETAS (ESTÉTICO)", duracion: "30", textoLegal: `.`},
     { nombre: "INYECTOLOGÍA APLICADA A LA ESTÉTICA", duracion: "30", textoLegal: `.`},
-    { nombre: "MAQUILLAJE DE FANTASÍA BÁSICA", duracion: "10", textoLegal: `.`}
+    { nombre: "MAQUILLAJE DE FANTASÍA BÁSICA", duracion: "10", textoLegal: `.`},
+    { nombre: "LIMPIEZA FACIAL PROFUNDA", duracion: "30", textoLegal: `.`}
 
   ]);
 
