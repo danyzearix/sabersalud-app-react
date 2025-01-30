@@ -8,7 +8,7 @@ import "../../Fonts/fonts.css"
 
 
 // Importa tu imagen de fondo
-const backgroundImage = 'https://sabersalud.co/wp-content/uploads/2025/01/plantilla-saberesteticav1.png';
+const backgroundImage = 'https://sabersalud.co/wp-content/uploads/2025/01/Certificado-Saber-Esteticavfinalfinal.png';
 
 // Estilos para el documento PDF
 Font.registerHyphenationCallback((word) => {
@@ -361,7 +361,6 @@ const CertificadosPDF = ({ userData, selectedOption, selectedDate }) => {
                   {getMonthName(selectedDate.split('-')[1]).toUpperCase()} {selectedDate.split('-')[2]} DEL {selectedDate.split('-')[0]}{"\n"}INTENSIDAD HORARIA {selectedOption.duracion} HORAS.
                   </Text>
                 )}
-                <Text style={styles.textovalido}>VÁLIDO POR 2 AÑOS</Text>
                 <Text style={styles.timestamp}>SS{timestamp}IT</Text>
               </View>
             </View>
