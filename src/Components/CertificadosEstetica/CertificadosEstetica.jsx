@@ -8,7 +8,7 @@ import "../../Fonts/fonts.css"
 
 
 // Importa tu imagen de fondo
-const backgroundImage = 'https://sabersalud.co/wp-content/uploads/2025/01/Certificado-Saber-Esteticavfinalfinal.png';
+const backgroundImage = 'https://sabersalud.co/wp-content/uploads/2025/01/Certificado-Saber-Esteticafebrero.png';
 
 // Estilos para el documento PDF
 Font.registerHyphenationCallback((word) => {
