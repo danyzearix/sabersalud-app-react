@@ -145,9 +145,9 @@ const CertificadosSer = () => {
   const [invoiceDate, setInvoiceDate] = useState(""); // Estado para manejar la fecha de la factura
 
   const [cursosDisponibles, setCursosDisponibles] = useState([
-    { nombre: "SUEROTERAPIA AVANZADA", duracion: "40", textoLegal: `No. 230101259.`, tipo:"CURSO" },
-    { nombre: "TERAPIA NEURAL & HOMEOSINIATRÍA", duracion: "40", textoLegal: `No. 230101259.` , tipo:"CURSO" },
-    { nombre: "SUEROTERAPIA NO INVASIVA", duracion: "40", textoLegal: `No. 230101259.` , tipo:"CURSO" },
+    { nombre: "SUEROTERAPIA AVANZADA", duracion: "40", textoLegal: `No. 230101259.`, tipo:"DIPLOMADO" },
+    { nombre: "TERAPIA NEURAL & HOMEOSINIATRÍA", duracion: "40", textoLegal: `No. 230101259.` , tipo:"DIPLOMADO" },
+    { nombre: "SUEROTERAPIA NO INVASIVA", duracion: "40", textoLegal: `No. 230101259.` , tipo:"DIPLOMADO" },
 
 
   ]);
