@@ -149,10 +149,10 @@ const CertificadosEstetica = () => {
     { nombre: "HIDROLIPOCLASIA", duracion: "40", textoLegal: `No. 230101259.` , tipo:"CURSO" },
     { nombre: "AROMATERAPIA", duracion: "20", textoLegal: `No. 230101297 .` , tipo:"CURSO"},
     { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `.`, tipo:"CURSO"},
-    { nombre: "PLASMA RICO EN PLAQUETAS (ESTÉTICO)", duracion: "30", textoLegal: `.`},
-    { nombre: "INYECTOLOGÍA APLICADA A LA ESTÉTICA", duracion: "30", textoLegal: `.`},
-    { nombre: "MAQUILLAJE DE FANTASÍA BÁSICA", duracion: "10", textoLegal: `.`},
-    { nombre: "LIMPIEZA FACIAL PROFUNDA", duracion: "30", textoLegal: `.`}
+    { nombre: "PLASMA RICO EN PLAQUETAS (ESTÉTICO)", duracion: "30", textoLegal: `.`,tipo:"CURSO"},
+    { nombre: "INYECTOLOGÍA APLICADA A LA ESTÉTICA", duracion: "30", textoLegal: `.`, tipo:"CURSO"},
+    { nombre: "MAQUILLAJE DE FANTASÍA BÁSICA", duracion: "10", textoLegal: `.`, tipo:"CURSO"},
+    { nombre: "LIMPIEZA FACIAL PROFUNDA", duracion: "30", textoLegal: `.`, tipo:"CURSO"}
 
   ]);
 
