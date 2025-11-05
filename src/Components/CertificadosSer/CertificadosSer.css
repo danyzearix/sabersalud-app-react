@@ -1,0 +1,184 @@
+/* ===== Variables de tema ===== */
+:root {
+  --bg: #f3f4f6;
+  --text: #0f172a;
+  --muted: #475569;
+  --card: #ffffff;
+  --border: #cbd5e1;
+
+  --primary: #0049cc;
+  --primary-hover: #003da5;
+  --success: #16a34a;
+  --success-hover: #15803d;
+
+  --input-bg: #f8fafc;
+  --input-text: #0f172a;
+  --ring: rgba(0, 73, 204, 0.35);
+  --shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --card: #111827;
+  --border: #1f2937;
+
+  --primary: #2e6bff;
+  --primary-hover: #1e56e6;
+  --success: #22c55e;
+  --success-hover: #16a34a;
+
+  --input-bg: #0f172a;
+  --input-text: #e5e7eb;
+  --ring: rgba(46, 107, 255, 0.45);
+  --shadow: 0 12px 24px rgba(0,0,0,0.35);
+}
+
+/* ===== Base ===== */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji",
+    "Segoe UI Emoji";
+}
+
+/* ===== Layout ===== */
+.page-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logo { height: 42px; width: auto; }
+
+/* ===== Toggle de tema ===== */
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 44px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-hover));
+  color: #fff;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  outline: none;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+.theme-toggle:hover { filter: brightness(1.02); }
+.theme-toggle:active { transform: scale(0.98); }
+.theme-toggle:focus-visible { box-shadow: 0 0 0 4px var(--ring); }
+.theme-toggle__thumb {
+  position: absolute;
+  left: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.04);
+}
+.theme-toggle__label { font-weight: 700; font-size: 14px; }
+
+/* ===== Contenedor ===== */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: min(900px, 100%);
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* ===== Inputs, selects, fechas ===== */
+.input,
+.dropdown,
+.date-input {
+  width: min(720px, 100%);
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  outline: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.input::placeholder { color: var(--muted); }
+.dropdown { cursor: pointer; }
+
+.input:focus,
+.dropdown:focus,
+.date-input:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.label {
+  width: min(720px, 100%);
+  text-align: center;
+  display: grid;
+  gap: 8px;
+  color: var(--text);
+}
+
+/* ===== Botones ===== */
+.btn {
+  width: min(720px, 100%);
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.06s ease, filter 0.15s ease, background 0.2s ease;
+  text-align: center;
+}
+.btn:active { transform: translateY(1px) scale(0.995); }
+.btn:focus-visible { outline: 4px solid var(--ring); outline-offset: 2px; }
+
+.btn-primary { background: var(--primary); }
+.btn-primary:hover { background: var(--primary-hover); filter: brightness(1.02); }
+
+.btn-success { background: var(--success); }
+.btn-success:hover { background: var(--success-hover); filter: brightness(1.02); }
+
+/* ===== Feedback / estados ===== */
+.status { margin: 0; font-size: 14px; }
+.status-info { color: var(--muted); }
+.status-ok { color: var(--success); font-weight: 700; }
+.status-error { color: #ef4444; font-weight: 600; }
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
+
+/* @media motion */
+@media (prefers-reduced-motion: reduce) {
+  .btn, .theme-toggle { transition: none; }
+}

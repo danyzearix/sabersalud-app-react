@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './Components/Layout/Layout';
+import Home from './Components/Home/Home';
 import Certificados from './Components/Certificados/Certificados';
 import CertificadosSer from './Components/CertificadosSer/CertificadosSer';
 import CertificadosEstetica from './Components/CertificadosEstetica/CertificadosEstetica';
@@ -36,35 +37,6 @@ const App = () => {
     </Router>
   );
 };
-
-// Suponiendo que tienes un componente para la página de inicio
-
-const Home = () => {
-  const cardData = [
-    { name: "Certificados SaberSalud", icon: "/certificado-sabersalud.png" },
-    { name: "Certificados Estética", icon: "/certificado-estetica.png" },
-    { name: "Lista de Clientes", icon: "/lista-clientes.png" },
-    { name: "Agregar Cliente", icon: "/agregar-cliente.png" },
-    { name: "Reportes", icon: "/reportes.png" }
-  ];
-
-  return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gray-100 p-5">
-      <h1 className="text-center text-4xl mb-10 font-bold">¡Bienvenido al aplicativo SaberSalud!</h1>
-      {/* Contenedor de tarjetas con flex-wrap y centrado horizontal */}
-      <div className="flex flex-wrap justify-center items-center gap-4 mb-4">
-        {cardData.map((card, index) => (
-          <div key={index} className="flex flex-col items-center justify-center p-6 bg-[#0049CC] text-white rounded-lg shadow-md hover:bg-[#003DA5] transition-colors w-72 h-48">
-            <img src={card.icon} alt={card.name} className="mb-4 h-16 w-16" />
-            <p className='font-bold'>{card.name}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-
 
 export default App;
 
