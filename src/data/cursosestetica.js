@@ -10,6 +10,7 @@ export const CURSOS_ESTETICA= [
   { nombre: "INYECTOLOGÍA APLICADA A LA ESTÉTICA", duracion: "40", textoLegal: `.`, tipo:"CURSO"},
   { nombre: "LIMPIEZA FACIAL PROFUNDA", duracion: "30", textoLegal: `.`, tipo:"CURSO"},
   { nombre: "MADEROTERAPIA", duracion: "30", textoLegal: `.`, tipo:"CURSO"},
+  { nombre: "MANEJO INTEGRAL Y APLICACION DE MICRODERMOABLASION", duracion: "30", textoLegal: `.`, tipo:"CURSO"},
   { nombre: "MAQUILLAJE DE FANTASÍA BÁSICA", duracion: "10", textoLegal: `.`, tipo:"CURSO"},
   { nombre: "MASAJES MOLDEADORES, REDUCTORES Y RELAJANTES", duracion: "30", textoLegal: `.`, tipo:"CURSO"},
   { nombre: "MESOTERAPIA", duracion: "30", textoLegal: `No. 230101263.` , tipo:"CURSO" },
