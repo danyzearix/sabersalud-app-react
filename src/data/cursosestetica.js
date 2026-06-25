@@ -14,9 +14,9 @@ export const CURSOS_ESTETICA= [
   { nombre: "MAQUILLAJE DE FANTASÍA BÁSICA", duracion: "10", textoLegal: `.`, tipo:"CURSO"},
   { nombre: "MASAJES MOLDEADORES, REDUCTORES Y RELAJANTES", duracion: "30", textoLegal: `.`, tipo:"CURSO"},
   { nombre: "MESOTERAPIA", duracion: "30", textoLegal: `No. 230101263.` , tipo:"CURSO" },
-  { nombre: "PLASMA RICO EN PLAQUETAS (CAPILAR)", duracion: "30", textoLegal: `.`,tipo:"CURSO"},
-  { nombre: "PLASMA RICO EN PLAQUETAS (ESTÉTICO)", duracion: "30", textoLegal: `.`,tipo:"CURSO"},
+  { nombre: "PLASMA RICO EN PLAQUETAS (CAPILAR, ESTÉTICO Y CORPORAL)", duracion: "90", textoLegal: `.`,tipo:"DIPLOMADO"},
   { nombre: "PRIMEROS AUXILIOS APLICADOS A LA ESTÉTICA", duracion: "40", textoLegal: `.`,tipo:"CURSO"},
-  { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `.`, tipo:"CURSO"},
+  { nombre: "SEMINARIO EN MEDICINA HOMEOPÁTICA", duracion: "20", textoLegal: `.`, tipo:""},
   { nombre: "TOXINA BOTULÍNICA", duracion: "40", textoLegal: `.`, tipo:"CURSO"},
+  { nombre: "SEMINARIO INTERNACIONAL EN CÓDIGO METABÓLICO", duracion: "10", textoLegal: `.`, tipo:"CURSO"}
 ];
